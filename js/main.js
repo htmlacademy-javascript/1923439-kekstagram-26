@@ -13,7 +13,7 @@ getPositiveRandomInt(3,80);
 
 // Универсальная функция для проверки длинны строки
 const checksLength = function (string, stringLengthMax) {
-  return string.length < stringLengthMax;
+  return string.length <= stringLengthMax;
 };
 
 checksLength('Я бы не стал таким заниматься', MAX_LENGTH_COMMENT);
