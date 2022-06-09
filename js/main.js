@@ -2,6 +2,9 @@
 const MAX_LENGTH_COMMENT = 140;
 const USERS_PHOTOS_COUNT = 25;
 const MAX_COUNT = 200;
+const MIN_LIKES = 15;
+const MIN_AVATAR_COUNT = 1;
+const MAX_AVATAR_COUNT = 6;
 
 // Данные придуманные мной
 const NAMES_AUTORS = [
@@ -88,27 +91,44 @@ function shuffleArray (array) {
 shuffleArray(ordererUnicInt);
 
 // Функция для создания объекта фотографий пользователей
+let userPhoto = {};
 const getPhotos = function (counter) {
-  return  {
+  userPhoto = {
     id: counter,
     url: `photos/${counter}.jpg` ,
     description: getRandomArrayElement(DESCRIPTIONS),
-    likes: getPositiveRandomInt(15, MAX_COUNT),
+    likes: getPositiveRandomInt(MIN_LIKES, MAX_COUNT),
     comments: [
       {
-        id: shuffleArray(ordererUnicInt[counter]),
-        avatar: `img/avatar-${getPositiveRandomInt(1, 6)}.svg`,
+        id: ordererUnicInt[counter],
+        avatar: `img/avatar-${getPositiveRandomInt(MIN_AVATAR_COUNT, MAX_AVATAR_COUNT)}.svg`,
         message: getRandomComment(),
         name: getRandomArrayElement(NAMES_AUTORS)
       }
     ]
   };
+  return userPhoto;
 };
+
+// let userComments = [];
+// function getMultiComments (counter) {
+//   userComments = [
+//     {
+//       id: shuffleArray(ordererUnicInt[counter]),
+//       avatar: `img/avatar-${getPositiveRandomInt(1, 6)}.svg`,
+//       message: getRandomComment(),
+//       name: getRandomArrayElement(NAMES_AUTORS)
+//     }
+//   ];
+//   return userComments;
+// };
 
 // Массив объектов с фотографиями пользователей
 const photosArray = [];
 for (let i = 1; i <= USERS_PHOTOS_COUNT; i++) {
   photosArray.push(getPhotos(i));
+  // Вот здесь хотелось бы создать условие с рандомными числами от 1 до 5, по результятом которого
+  // в объект пихался бы ещё от 1 до 5 массивов комментариев
 }
 
 // const photosArray = Array.from({length: USERS_PHOTOS_COUNT}, getPhotos);
