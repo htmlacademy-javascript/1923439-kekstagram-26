@@ -1,7 +1,7 @@
-/* eslint-disable no-unused-vars */
 // Данные известные заранее
 const MAX_LENGTH_COMMENT = 140;
 const USERS_PHOTOS_COUNT = 25;
+const MAX_COUNT = 200;
 
 // Данные придуманные мной
 const NAMES_AUTORS = [
@@ -57,34 +57,80 @@ const getRandomArrayElement = function (elements) {
   return elements[getPositiveRandomInt(0, elements.length - 1)];
 };
 
+// Функция для генерации случайного комментария
+let randomComment;
+const getRandomComment = function () {
+  randomComment = COMMENTS[getPositiveRandomInt(0, COMMENTS.length - 1)];
+  if (getPositiveRandomInt(1, 2) > 1) {
+    randomComment = `${COMMENTS[getPositiveRandomInt(0, COMMENTS.length - 1)] } ${  COMMENTS[getPositiveRandomInt(0, COMMENTS.length - 1)]}`;
+  }
+  return randomComment;
+};
+
+// Массив последовательных неповторящихся чисел
+const ordererUnicInt = [];
+for (let i = 0; i <= MAX_COUNT; i++) {
+  ordererUnicInt.push(i);
+}
+
+// Функция для перемешивания массива
+function shuffleArray (array) {
+  let j, temp;
+  for(let i = array.length - 1; i > 0; i--){
+    j = Math.floor(Math.random()*(i + 1));
+    temp = array[j];
+    array[j] = array[i];
+    array[i] = temp;
+  }
+  return array;
+}
+
+shuffleArray(ordererUnicInt);
+
 // Функция для создания объекта фотографий пользователей
-const getPhotos = function () {
+const getPhotos = function (counter) {
   return  {
-    id: ' ',
-    url: `photos/${getPositiveRandomInt(1, 25) }.jpg`,
+    id: counter,
+    url: `photos/${counter}.jpg` ,
     description: getRandomArrayElement(DESCRIPTIONS),
-    likes: getPositiveRandomInt(15, 200),
+    likes: getPositiveRandomInt(15, MAX_COUNT),
     comments: [
       {
-        id: ' ',
+        id: shuffleArray(ordererUnicInt[counter]),
         avatar: `img/avatar-${getPositiveRandomInt(1, 6)}.svg`,
-        message: ' ',
+        message: getRandomComment(),
         name: getRandomArrayElement(NAMES_AUTORS)
       }
     ]
   };
 };
 
-// Собираем массив объектов
+// Массив объектов с фотографиями пользователей
 const photosArray = [];
 for (let i = 1; i <= USERS_PHOTOS_COUNT; i++) {
-  photosArray[i] = getPhotos();
-  photosArray[i].id = i;
-  photosArray[i].url = `photos/${i}.jpg`;
-  photosArray[i].comments.id = getPositiveRandomInt(1, 200);
-  photosArray[i].comments.message = COMMENTS[getPositiveRandomInt(0, COMMENTS.length - 1)];
-  if (getPositiveRandomInt(1, 2) > 1) {
-    photosArray[i].comments.message = `${COMMENTS[getPositiveRandomInt(0, COMMENTS.length - 1)] } ${  COMMENTS[getPositiveRandomInt(0, COMMENTS.length - 1)]}`;
-  }
+  photosArray.push(getPhotos(i));
 }
 
+// const photosArray = Array.from({length: USERS_PHOTOS_COUNT}, getPhotos);
+
+// Собираем массив объектов
+// const photosArrayOld = [];
+// for (let i = 1; i <= 7; i++) {
+//   photosArray[i] = getPhotos();
+//   photosArray[i].id = i;
+//   photosArray[i].url = `photos/${i}.jpg`;
+//   photosArray[i].description = getRandomArrayElement(DESCRIPTIONS);
+//   photosArray[i].likes = getPositiveRandomInt(15, 200);
+//   photosArray[i].comments.id = getPositiveRandomInt(1, 7);
+//   for (let j = 1; j < i; j++) {
+//     if (photosArray[i].comments.id === photosArray[j].comments.id) {
+//       photosArray[i].comments.id = getPositiveRandomInt(199, 200);
+//     }
+//   }
+//   photosArray[i].comments.avatar = `img/avatar-${getPositiveRandomInt(1, 6)}.svg`;
+//   photosArray[i].comments.message = COMMENTS[getPositiveRandomInt(0, COMMENTS.length - 1)];
+//   if (getPositiveRandomInt(1, 2) > 1) {
+//     photosArray[i].comments.message = `${COMMENTS[getPositiveRandomInt(0, COMMENTS.length - 1)] } ${  COMMENTS[getPositiveRandomInt(0, COMMENTS.length - 1)]}`;
+//   }
+//   photosArray[i].comments.name = getRandomArrayElement(NAMES_AUTORS);
+// }
