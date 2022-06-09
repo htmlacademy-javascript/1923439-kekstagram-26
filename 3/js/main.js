@@ -63,8 +63,10 @@ const getRandomArrayElement = function (elements) {
 // Функция для генерации случайного комментария
 let randomComment;
 const getRandomComment = function () {
+  const randomCommentMinCount = 1;
+  const randomCommentMaxCount = 2;
   randomComment = COMMENTS[getPositiveRandomInt(0, COMMENTS.length - 1)];
-  if (getPositiveRandomInt(1, 2) > 1) {
+  if (getPositiveRandomInt(randomCommentMinCount, randomCommentMaxCount) > randomCommentMinCount) {
     randomComment = `${COMMENTS[getPositiveRandomInt(0, COMMENTS.length - 1)] } ${  COMMENTS[getPositiveRandomInt(0, COMMENTS.length - 1)]}`;
   }
   return randomComment;
