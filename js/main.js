@@ -107,15 +107,15 @@ const getPhoto = function (counter) {
     url: `photos/${counter}.jpg` ,
     description: getRandomArrayElement(DESCRIPTIONS),
     likes: getPositiveRandomInt(MIN_LIKES, MAX_COUNT),
-    comments: getMultiComments(MULTICOMENTS_MIN_COUNT, MULTICOMENTS_MAX_COUNT)
+    comments: getMultiComments(getPositiveRandomInt(MULTICOMENTS_MIN_COUNT, MULTICOMENTS_MAX_COUNT))
   };
   return userPhoto;
 };
 
 // Функция для создания массива с комментариями
-function getMultiComments (minComments, maxComments) {
+function getMultiComments (commentsCounter) {
   const userComments = [];
-  for (let i = 0; i < getPositiveRandomInt(minComments, maxComments); i++) {
+  for (let i = 0; i < commentsCounter; i++) {
     userComments[i] = {
       id: ordererUnicArray.shift(),
       avatar: `img/avatar-${getPositiveRandomInt(MIN_AVATAR_COUNT, MAX_AVATAR_COUNT)}.svg`,
