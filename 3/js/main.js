@@ -5,9 +5,13 @@ const MAX_COUNT = 200;
 const MIN_LIKES = 15;
 const MIN_AVATAR_COUNT = 1;
 const MAX_AVATAR_COUNT = 6;
+const RANDOM_COMMENT_MIN_COUNT = 1;
+const RANDOM_COMMENT_MAX_COUNT = 2;
+const MULTICOMENTS_MIN_COUNT = 1;
+const MULTICOMENTS_MAX_COUNT = 5;
 
 // Данные придуманные мной
-const NAMES_AUTORS = [
+const NAMES_AUTHORS = [
   'Иван',
   'Платон',
   'Евлампий',
@@ -61,22 +65,25 @@ const getRandomArrayElement = function (elements) {
 };
 
 // Функция для генерации случайного комментария
-let randomComment;
 const getRandomComment = function () {
-  const randomCommentMinCount = 1;
-  const randomCommentMaxCount = 2;
+  let randomComment;
   randomComment = COMMENTS[getPositiveRandomInt(0, COMMENTS.length - 1)];
-  if (getPositiveRandomInt(randomCommentMinCount, randomCommentMaxCount) > randomCommentMinCount) {
-    randomComment = `${COMMENTS[getPositiveRandomInt(0, COMMENTS.length - 1)] } ${  COMMENTS[getPositiveRandomInt(0, COMMENTS.length - 1)]}`;
+  if (getPositiveRandomInt(RANDOM_COMMENT_MIN_COUNT, RANDOM_COMMENT_MAX_COUNT) > RANDOM_COMMENT_MIN_COUNT) {
+    randomComment += ` ${  COMMENTS[getPositiveRandomInt(0, COMMENTS.length - 1)]}`;
   }
   return randomComment;
 };
 
-// Массив последовательных неповторящихся чисел
-const ordererUnicInt = [];
-for (let i = 0; i <= MAX_COUNT; i++) {
-  ordererUnicInt.push(i);
+// Функция для создания массива последовательных неповторящихся чисел
+function getOrderUnicArray (maxCount) {
+  const UnicArray = [];
+  for (let i = 1; i <= maxCount; i++) {
+    UnicArray.push(i);
+  }
+  return UnicArray;
 }
+
+const ordererUnicArray = getOrderUnicArray(MAX_COUNT);
 
 // Функция для перемешивания массива
 function shuffleArray (array) {
@@ -90,69 +97,42 @@ function shuffleArray (array) {
   return array;
 }
 
-shuffleArray(ordererUnicInt);
+shuffleArray(ordererUnicArray);
 
 // Функция для создания объекта фотографий пользователей
-let userPhoto = {};
-const getPhotos = function (counter) {
+const getPhoto = function (counter) {
+  let userPhoto = {};
   userPhoto = {
     id: counter,
     url: `photos/${counter}.jpg` ,
     description: getRandomArrayElement(DESCRIPTIONS),
     likes: getPositiveRandomInt(MIN_LIKES, MAX_COUNT),
-    comments: [
-      {
-        id: ordererUnicInt[counter],
-        avatar: `img/avatar-${getPositiveRandomInt(MIN_AVATAR_COUNT, MAX_AVATAR_COUNT)}.svg`,
-        message: getRandomComment(),
-        name: getRandomArrayElement(NAMES_AUTORS)
-      }
-    ]
+    comments: getMultiComments(getPositiveRandomInt(MULTICOMENTS_MIN_COUNT, MULTICOMENTS_MAX_COUNT))
   };
   return userPhoto;
 };
 
-// let userComments = [];
-// function getMultiComments (counter) {
-//   userComments = [
-//     {
-//       id: shuffleArray(ordererUnicInt[counter]),
-//       avatar: `img/avatar-${getPositiveRandomInt(1, 6)}.svg`,
-//       message: getRandomComment(),
-//       name: getRandomArrayElement(NAMES_AUTORS)
-//     }
-//   ];
-//   return userComments;
-// };
-
-// Массив объектов с фотографиями пользователей
-const photosArray = [];
-for (let i = 1; i <= USERS_PHOTOS_COUNT; i++) {
-  photosArray.push(getPhotos(i));
-  // Вот здесь хотелось бы создать условие с рандомными числами от 1 до 5, по результятом которого
-  // в объект пихался бы ещё от 1 до 5 массивов комментариев
+// Функция для создания массива с комментариями
+function getMultiComments (commentsCounter) {
+  const userComments = [];
+  for (let i = 0; i < commentsCounter; i++) {
+    userComments[i] = {
+      id: ordererUnicArray.shift(),
+      avatar: `img/avatar-${getPositiveRandomInt(MIN_AVATAR_COUNT, MAX_AVATAR_COUNT)}.svg`,
+      message: getRandomComment(),
+      name: getRandomArrayElement(NAMES_AUTHORS)
+    };
+  }
+  return userComments;
 }
 
-// const photosArray = Array.from({length: USERS_PHOTOS_COUNT}, getPhotos);
+// Массив объектов с фотографиями пользователей
+function getPhotosArray (photosCount) {
+  const photosArray = [];
+  for (let i = 1; i <= photosCount; i++) {
+    photosArray.push(getPhoto(i));
+  }
+  return photosArray;
+}
 
-// Собираем массив объектов
-// const photosArrayOld = [];
-// for (let i = 1; i <= 7; i++) {
-//   photosArray[i] = getPhotos();
-//   photosArray[i].id = i;
-//   photosArray[i].url = `photos/${i}.jpg`;
-//   photosArray[i].description = getRandomArrayElement(DESCRIPTIONS);
-//   photosArray[i].likes = getPositiveRandomInt(15, 200);
-//   photosArray[i].comments.id = getPositiveRandomInt(1, 7);
-//   for (let j = 1; j < i; j++) {
-//     if (photosArray[i].comments.id === photosArray[j].comments.id) {
-//       photosArray[i].comments.id = getPositiveRandomInt(199, 200);
-//     }
-//   }
-//   photosArray[i].comments.avatar = `img/avatar-${getPositiveRandomInt(1, 6)}.svg`;
-//   photosArray[i].comments.message = COMMENTS[getPositiveRandomInt(0, COMMENTS.length - 1)];
-//   if (getPositiveRandomInt(1, 2) > 1) {
-//     photosArray[i].comments.message = `${COMMENTS[getPositiveRandomInt(0, COMMENTS.length - 1)] } ${  COMMENTS[getPositiveRandomInt(0, COMMENTS.length - 1)]}`;
-//   }
-//   photosArray[i].comments.name = getRandomArrayElement(NAMES_AUTORS);
-// }
+getPhotosArray(USERS_PHOTOS_COUNT);
