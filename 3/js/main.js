@@ -44,7 +44,7 @@ const DESCRIPTIONS = [
 
 
 // Генерация случайного числа
-const getPositiveRandomInt = function (min, max) {
+const getPositiveRandomInt = (min, max) => {
   if (max > min && min >= 0 && max >= 0) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
   } else {
@@ -53,19 +53,15 @@ const getPositiveRandomInt = function (min, max) {
 };
 
 // Универсальная функция для проверки длинны строки
-const checksLength = function (string, stringLengthMax) {
-  return string.length <= stringLengthMax;
-};
+const checksLength = (string, stringLengthMax) => string.length <= stringLengthMax;
 
 checksLength('Я бы не стал таким заниматься', MAX_LENGTH_COMMENT);
 
 // Функция для создания рандомного индекса элемента
-const getRandomArrayElement = function (elements) {
-  return elements[getPositiveRandomInt(0, elements.length - 1)];
-};
+const getRandomArrayElement = (elements) => elements[getPositiveRandomInt(0, elements.length - 1)];
 
 // Функция для генерации случайного комментария
-const getRandomComment = function () {
+const getRandomComment = () => {
   let randomComment;
   randomComment = COMMENTS[getPositiveRandomInt(0, COMMENTS.length - 1)];
   if (getPositiveRandomInt(RANDOM_COMMENT_MIN_COUNT, RANDOM_COMMENT_MAX_COUNT) > RANDOM_COMMENT_MIN_COUNT) {
@@ -75,18 +71,18 @@ const getRandomComment = function () {
 };
 
 // Функция для создания массива последовательных неповторящихся чисел
-function getOrderUnicArray (maxCount) {
-  const UnicArray = [];
+const getOrderUnicArray = (maxCount) => {
+  const unicArray = [];
   for (let i = 1; i <= maxCount; i++) {
-    UnicArray.push(i);
+    unicArray.push(i);
   }
-  return UnicArray;
-}
+  return unicArray;
+};
 
 const ordererUnicArray = getOrderUnicArray(MAX_COUNT);
 
 // Функция для перемешивания массива
-function shuffleArray (array) {
+const shuffleArray = (array) => {
   let j, temp;
   for(let i = array.length - 1; i > 0; i--){
     j = Math.floor(Math.random()*(i + 1));
@@ -95,25 +91,12 @@ function shuffleArray (array) {
     array[i] = temp;
   }
   return array;
-}
+};
 
 shuffleArray(ordererUnicArray);
 
-// Функция для создания объекта фотографий пользователей
-const getPhoto = function (counter) {
-  let userPhoto = {};
-  userPhoto = {
-    id: counter,
-    url: `photos/${counter}.jpg` ,
-    description: getRandomArrayElement(DESCRIPTIONS),
-    likes: getPositiveRandomInt(MIN_LIKES, MAX_COUNT),
-    comments: getMultiComments(getPositiveRandomInt(MULTICOMENTS_MIN_COUNT, MULTICOMENTS_MAX_COUNT))
-  };
-  return userPhoto;
-};
-
 // Функция для создания массива с комментариями
-function getMultiComments (commentsCounter) {
+const getMultiComments = (commentsCounter) => {
   const userComments = [];
   for (let i = 0; i < commentsCounter; i++) {
     userComments[i] = {
@@ -124,15 +107,27 @@ function getMultiComments (commentsCounter) {
     };
   }
   return userComments;
-}
+};
+
+// Функция для создания объекта фотографий пользователей
+const getPhoto = (counter) => {
+  const userPhoto = {
+    id: counter,
+    url: `photos/${counter}.jpg` ,
+    description: getRandomArrayElement(DESCRIPTIONS),
+    likes: getPositiveRandomInt(MIN_LIKES, MAX_COUNT),
+    comments: getMultiComments(getPositiveRandomInt(MULTICOMENTS_MIN_COUNT, MULTICOMENTS_MAX_COUNT))
+  };
+  return userPhoto;
+};
 
 // Массив объектов с фотографиями пользователей
-function getPhotosArray (photosCount) {
+const getPhotosArray = (photosCount) => {
   const photosArray = [];
   for (let i = 1; i <= photosCount; i++) {
     photosArray.push(getPhoto(i));
   }
   return photosArray;
-}
+};
 
 getPhotosArray(USERS_PHOTOS_COUNT);
