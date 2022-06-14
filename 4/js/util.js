@@ -16,8 +16,6 @@ const getRandomArrayElement = (elements) => elements[getPositiveRandomInt(0, ele
 // Универсальная функция для проверки длинны строки
 const checksLength = (string, stringLengthMax) => string.length <= stringLengthMax;
 
-checksLength('Я бы не стал таким заниматься', MAX_LENGTH_COMMENT);
-
 // Функция для создания массива последовательных неповторящихся чисел
 const getOrderUnicArray = (maxCount) => {
   const unicArray = [];
@@ -26,8 +24,6 @@ const getOrderUnicArray = (maxCount) => {
   }
   return unicArray;
 };
-
-const ordererUnicArray = getOrderUnicArray(MAX_COUNT);
 
 // Функция для перемешивания массива
 const shuffleArray = (array) => {
@@ -41,6 +37,4 @@ const shuffleArray = (array) => {
   return array;
 };
 
-shuffleArray(ordererUnicArray);
-
-export {getRandomArrayElement, getPositiveRandomInt, checksLength, ordererUnicArray, MAX_COUNT};
+export {getRandomArrayElement, getPositiveRandomInt, checksLength, MAX_COUNT, MAX_LENGTH_COMMENT, shuffleArray, getOrderUnicArray};

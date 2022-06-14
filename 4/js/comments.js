@@ -1,4 +1,4 @@
-import { getPositiveRandomInt, ordererUnicArray, getRandomArrayElement } from './util.js';
+import { getPositiveRandomInt, getRandomArrayElement, getOrderUnicArray, shuffleArray, MAX_COUNT } from './util.js';
 
 const MIN_AVATAR_COUNT = 1;
 const MAX_AVATAR_COUNT = 6;
@@ -39,6 +39,9 @@ const getRandomComment = () => {
   }
   return randomComment;
 };
+
+const ordererUnicArray = getOrderUnicArray(MAX_COUNT);
+shuffleArray(ordererUnicArray);
 
 // Функция для создания массива с комментариями
 const getMultiComments = (commentsCounter) => {
