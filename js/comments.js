@@ -40,6 +40,7 @@ const getRandomComment = () => {
   return randomComment;
 };
 
+// Записываем массив ID комментариев в переменную и перемешиваем его
 const ordererUnicArray = getOrderUnicArray(MAX_COUNT);
 shuffleArray(ordererUnicArray);
 
