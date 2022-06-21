@@ -37,4 +37,4 @@ const getPhotosArray = (photosCount) => {
   return photosArray;
 };
 
-export {getPhotosArray, USERS_PHOTOS_COUNT};
+export {getPhotosArray, USERS_PHOTOS_COUNT, getPhoto};
