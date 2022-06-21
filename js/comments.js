@@ -58,4 +58,4 @@ const getMultiComments = (commentsCounter) => {
   return userComments;
 };
 
-export {getMultiComments};
+export {getMultiComments, getRandomComment, RANDOM_COMMENT_MIN_COUNT, RANDOM_COMMENT_MAX_COUNT};
