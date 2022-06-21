@@ -5,7 +5,7 @@ import { getMultiComments } from './comments.js';
 const USERS_PHOTOS_COUNT = 25;
 const MIN_LIKES = 15;
 const MULTICOMENTS_MIN_COUNT = 1;
-const MULTICOMENTS_MAX_COUNT = 5;
+const MULTICOMENTS_MAX_COUNT = 15;
 
 // Описание фоток
 const DESCRIPTIONS = [
