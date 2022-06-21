@@ -10,7 +10,6 @@ const simularMiniaturesFragment = document.createDocumentFragment();
 
 simularMiniatures.forEach(({url, likes, comments}) => {
   const usersMiniaturesElement = usersMiniaturesTemplate.cloneNode(true);
-  usersMiniaturesContainer.appendChild(usersMiniaturesElement);
   usersMiniaturesElement.querySelector('.picture__img').src = url;
   usersMiniaturesElement.querySelector('.picture__comments').textContent = comments.length;
   usersMiniaturesElement.querySelector('.picture__likes').textContent = likes;
