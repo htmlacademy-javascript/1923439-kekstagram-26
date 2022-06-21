@@ -1,12 +1,10 @@
-import { getPhotosArray, USERS_PHOTOS_COUNT, getPhoto } from './data.js';
+import { getPhotosArray, USERS_PHOTOS_COUNT } from './data.js';
 
 const usersMiniaturesContainer = document.querySelector('.pictures');
 const usersMiniaturesTemplate = document.querySelector('#picture').content.querySelector('.picture');
 
 
 const simularMiniatures = getPhotosArray(USERS_PHOTOS_COUNT);
-getPhoto();
-
 
 const simularMiniaturesFragment = document.createDocumentFragment();
 
