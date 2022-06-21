@@ -1,0 +1,12 @@
+import { getPhotosArray, USERS_PHOTOS_COUNT } from './data';
+
+const usersMiniaturesContainer = document.querySelector('.pictures');
+const usersMiniaturesTemplate = document.querySelector('#picture').Content.querySelector('.picture');
+
+
+const simularMiniatures = getPhotosArray(USERS_PHOTOS_COUNT);
+
+simularMiniatures.forEach (() => {
+  const usersMiniaturesElement = usersMiniaturesTemplate.cloneNode(true);
+  usersMiniaturesContainer.appendChild(usersMiniaturesElement);
+});
