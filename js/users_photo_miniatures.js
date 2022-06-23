@@ -1,4 +1,4 @@
-import { renderBigPhotosInfo, renderBigPhotosComment } from './users_photo_big.js';
+import { renderBigPhotosInfo, renderBigPhotosComment} from './users_photo_big.js';
 const usersMiniaturesContainer = document.querySelector('.pictures');
 const usersMiniaturesTemplate = document.querySelector('#picture').content.querySelector('.picture');
 
@@ -6,7 +6,7 @@ const usersMiniaturesTemplate = document.querySelector('#picture').content.query
 const renderUsersMiniatures = (photosArray) => {
   const usersMiniaturesFragment = document.createDocumentFragment();
   photosArray.forEach((photoObject) => {
-    const {url, likes, comments,} = photoObject;
+    const {url, likes, comments} = photoObject;
     const usersMiniaturesElement = usersMiniaturesTemplate.cloneNode(true);
     usersMiniaturesElement.querySelector('.picture__img').src = url;
     usersMiniaturesElement.querySelector('.picture__comments').textContent = comments.length;
@@ -14,7 +14,8 @@ const renderUsersMiniatures = (photosArray) => {
     usersMiniaturesElement.addEventListener('click', (evt) => {
       evt.preventDefault();
       renderBigPhotosInfo(photoObject);
-      renderBigPhotosComment();
+      document.querySelector('.social__comments').replaceChildren();
+      renderBigPhotosComment(comments);
     });
     usersMiniaturesFragment.appendChild(usersMiniaturesElement);
   });
