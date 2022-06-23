@@ -33,6 +33,23 @@ const closeBigPictureClick = () => {
   });
 };
 
+// Функция добавляющая в разметку комментарии пользователей
+const renderBigPhotosComment = ({avatar, message, name}) => {
+  const commentsList = document.querySelector('.social__comments');
+  const commentsItem = document.createElement('li');
+  const commentsItemImg = document.createElement('img');
+  const commentsItemText = document.createElement('p');
+  commentsItem.classList.add('social__comment');
+  commentsItemImg.classList.add('social__picture');
+  commentsItemText.classList.add('social__text');
+  commentsItemImg.src = avatar;
+  commentsItemImg.alt = name;
+  commentsItemText.textContent = message;
+  commentsItem.appendChild(commentsItemImg);
+  commentsItem.appendChild(commentsItemText);
+  commentsList.appendChild(commentsItem);
+};
+
 // Функция добавляющая в разметку информацию о большой фотографии
 const renderBigPhotosInfo = ({url, likes, comments, description}) => {
   bigPicture.src = url;
@@ -44,6 +61,4 @@ const renderBigPhotosInfo = ({url, likes, comments, description}) => {
   closeBigPictureClick();
 };
 
-// Функция добавляющая в разметку комментарии пользователей
-
-export {bigPicture, renderBigPhotosInfo};
+export {bigPicture, renderBigPhotosInfo, renderBigPhotosComment};

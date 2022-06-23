@@ -13,5 +13,4 @@ console.log(photosMiniaturesArray);
 // Отрисовываем миниатюры фотографий пользователей
 renderUsersMiniatures(photosMiniaturesArray);
 
-// Открываем режим просмотра большой фотографии
 
