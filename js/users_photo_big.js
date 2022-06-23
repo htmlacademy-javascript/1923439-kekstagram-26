@@ -16,12 +16,19 @@ const commentsCount = bigPictureSection.querySelector('.comments-count');
 // Находим описание большой фотографии
 const photoDescription = bigPictureSection.querySelector('.social__caption');
 
+// Находим диапозон отображаемых комментариев
+const commentCountRange = bigPictureSection.querySelector('.social__comment-count');
+
+// Находим кнопку загрузки свежей порции комментариев
+const commentShowMoreButton = bigPictureSection.querySelector('.social__comments-loader');
+
 
 // Функция закрывающая окно просмотра большой фотографии кнопкой 'Esc'
 const closeBigPictureKeyBoard = () => {
   document.addEventListener('keydown', (evt) => {
     if (evt.keyCode === 27) {
       bigPictureSection.classList.add('hidden');
+      document.querySelector('body').classList.remove('modal-open');
     }
   });
 };
@@ -30,6 +37,7 @@ const closeBigPictureKeyBoard = () => {
 const closeBigPictureClick = () => {
   bigPictureClose.addEventListener('click', () => {
     bigPictureSection.classList.add('hidden');
+    document.querySelector('body').classList.remove('modal-open');
   });
 };
 
@@ -59,6 +67,9 @@ const renderBigPhotosInfo = ({url, likes, comments, description}) => {
   commentsCount.textContent = comments.length;
   photoDescription.textContent = description;
   bigPictureSection.classList.remove('hidden');
+  commentCountRange.classList.add('hidden');
+  commentShowMoreButton.classList.add('hidden');
+  document.querySelector('body').classList.add('modal-open');
   closeBigPictureKeyBoard();
   closeBigPictureClick();
 };
