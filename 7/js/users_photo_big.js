@@ -1,3 +1,5 @@
+import { createElement } from './util.js';
+
 // Находим секцию детального просмотра фотографий
 const bigPictureSection = document.querySelector('.big-picture');
 
@@ -45,12 +47,9 @@ const closeBigPictureClick = () => {
 const renderBigPhotosComment = (comments) => {
   comments.forEach(({avatar, message, name}) => {
     const commentsList = document.querySelector('.social__comments');
-    const commentsItem = document.createElement('li');
-    const commentsItemImg = document.createElement('img');
-    const commentsItemText = document.createElement('p');
-    commentsItem.classList.add('social__comment');
-    commentsItemImg.classList.add('social__picture');
-    commentsItemText.classList.add('social__text');
+    const commentsItem = createElement('li', 'social__comment');
+    const commentsItemImg = createElement('img', 'social__picture');
+    const commentsItemText = createElement('p', 'social__text');
     commentsItemImg.src = avatar;
     commentsItemImg.alt = name;
     commentsItemText.textContent = message;
