@@ -1,7 +1,8 @@
-import { getPhotosInfo } from './users_photo_big.js';
+import { renderBigPhotosInfo } from './users_photo_big.js';
 const usersMiniaturesContainer = document.querySelector('.pictures');
 const usersMiniaturesTemplate = document.querySelector('#picture').content.querySelector('.picture');
 
+// Функция для отрисовки миниатюр фотографий пользователей и замыкание на синхронизацию с большими фотографиями
 const renderUsersMiniatures = (photosArray) => {
   const usersMiniaturesFragment = document.createDocumentFragment();
   photosArray.forEach((photoObject) => {
@@ -12,7 +13,7 @@ const renderUsersMiniatures = (photosArray) => {
     usersMiniaturesElement.querySelector('.picture__likes').textContent = likes;
     usersMiniaturesElement.addEventListener('click', (evt) => {
       evt.preventDefault();
-      getPhotosInfo(photoObject);
+      renderBigPhotosInfo(photoObject);
     });
     usersMiniaturesFragment.appendChild(usersMiniaturesElement);
   });
