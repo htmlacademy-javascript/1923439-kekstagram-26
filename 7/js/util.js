@@ -44,4 +44,7 @@ const createElement = (tagName, className) => {
   return element;
 };
 
-export {getRandomArrayElement, getPositiveRandomInt, checksLength, MAX_COUNT, MAX_LENGTH_COMMENT, shuffleArray, getOrderUnicArray, createElement};
+// Создаём функцию проверки нажатия esc на клавиатуре
+const isEscapeDown = (evt) => evt.key === 'Escape';
+
+export {getRandomArrayElement, getPositiveRandomInt, checksLength, MAX_COUNT, MAX_LENGTH_COMMENT, shuffleArray, getOrderUnicArray, createElement, isEscapeDown};
