@@ -1,4 +1,4 @@
-import { createElement } from './util.js';
+import { createElement, isEscapeDown } from './util.js';
 
 // Находим секцию детального просмотра фотографий
 const bigPictureSection = document.querySelector('.big-picture');
@@ -24,24 +24,37 @@ const commentCountRange = bigPictureSection.querySelector('.social__comment-coun
 // Находим кнопку загрузки свежей порции комментариев
 const commentShowMoreButton = bigPictureSection.querySelector('.social__comments-loader');
 
-
-// Функция закрывающая окно просмотра большой фотографии кнопкой 'Esc'
-const closeBigPictureKeyBoard = () => {
-  document.addEventListener('keydown', (evt) => {
-    if (evt.keyCode === 27) {
-      bigPictureSection.classList.add('hidden');
-      document.querySelector('body').classList.remove('modal-open');
-    }
-  });
+const onPopupEscKeydown = (evt) => {
+  if (isEscapeDown(evt)) {
+    evt.preventDefault();
+    closeBigPicture();
+    // console.log('Закрываю с клавиатуры');
+  }
 };
 
-// Функция закрывающая окно просмотра большой фотографии  кликом по кнопке закрытия
-const closeBigPictureClick = () => {
-  bigPictureClose.addEventListener('click', () => {
-    bigPictureSection.classList.add('hidden');
-    document.querySelector('body').classList.remove('modal-open');
-  });
+const onPopupClickOff = () => {
+  bigPictureSection.classList.add('hidden');
+  document.querySelector('body').classList.remove('modal-open');
+  // console.log('Закрываю с клика');
 };
+
+
+function openBigPicture () {
+  bigPictureSection.classList.remove('hidden');
+  document.querySelector('body').classList.add('modal-open');
+  commentCountRange.classList.add('hidden');
+  commentShowMoreButton.classList.add('hidden');
+  document.addEventListener('keydown', onPopupEscKeydown);
+  bigPictureClose.addEventListener('click', onPopupClickOff);
+}
+
+function closeBigPicture () {
+  bigPictureSection.classList.add('hidden');
+  document.querySelector('body').classList.remove('modal-open');
+  document.removeEventListener('keydown', onPopupEscKeydown);
+  bigPictureClose.removeEventListener('click', onPopupClickOff);
+}
+
 
 // Функция добавляющая в разметку комментарии пользователей
 const renderBigPhotosComment = (comments) => {
@@ -65,12 +78,7 @@ const renderBigPhotosInfo = ({url, likes, comments, description}) => {
   likesCount.textContent = likes;
   commentsCount.textContent = comments.length;
   photoDescription.textContent = description;
-  bigPictureSection.classList.remove('hidden');
-  commentCountRange.classList.add('hidden');
-  commentShowMoreButton.classList.add('hidden');
-  document.querySelector('body').classList.add('modal-open');
-  closeBigPictureKeyBoard();
-  closeBigPictureClick();
 };
 
-export {bigPicture, renderBigPhotosInfo, renderBigPhotosComment};
+
+export {bigPicture, renderBigPhotosInfo, renderBigPhotosComment, openBigPicture, closeBigPicture, onPopupEscKeydown};
