@@ -28,14 +28,12 @@ const onPopupEscKeydown = (evt) => {
   if (isEscapeDown(evt)) {
     evt.preventDefault();
     closeBigPicture();
-    // console.log('Закрываю с клавиатуры');
+
   }
 };
 
 const onPopupClickOff = () => {
-  bigPictureSection.classList.add('hidden');
-  document.querySelector('body').classList.remove('modal-open');
-  // console.log('Закрываю с клика');
+  closeBigPicture();
 };
 
 
