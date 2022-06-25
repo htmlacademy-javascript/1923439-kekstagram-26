@@ -13,10 +13,10 @@ const renderUsersMiniatures = (photosArray) => {
     usersMiniaturesElement.querySelector('.picture__likes').textContent = likes;
     usersMiniaturesElement.addEventListener('click', (evt) => {
       evt.preventDefault();
-      openBigPicture();
       renderBigPhotosInfo(photoObject);
       document.querySelector('.social__comments').replaceChildren();
       renderBigPhotosComment(comments);
+      openBigPicture();
     });
     usersMiniaturesFragment.appendChild(usersMiniaturesElement);
   });
