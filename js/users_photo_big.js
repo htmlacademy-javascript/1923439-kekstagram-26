@@ -28,7 +28,6 @@ const onPopupEscKeydown = (evt) => {
   if (isEscapeDown(evt)) {
     evt.preventDefault();
     closeBigPicture();
-
   }
 };
 

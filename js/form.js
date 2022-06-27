@@ -9,14 +9,17 @@ const formPhotoEdit = document.querySelector('.img-upload__overlay');
 // Находим кнопку закоытия формы редактирования фотографии
 const editPopupCLoseButton = document.querySelector('#upload-cancel');
 
+// Находим форму для загрузки фотографии пользователем
+const userPhotoForm = document.querySelector('.img-upload__form');
+
 
 // Добавляем обработчик показа формы редактирования изображения
 uploadFileInput.addEventListener('change', openEditPhotosPopap);
 
 // функция проверки и закрытия если нажат esc и удаления обработчика
 const onEditPopupEscDown = (evt) => {
-  evt.preventDefault();
-  if (isEscapeDown) {
+  if (isEscapeDown(evt)) {
+    evt.preventDefault();
     closeEditPhotosPopup();
   }
 };
@@ -38,6 +41,9 @@ function openEditPhotosPopap () {
 function closeEditPhotosPopup () {
   formPhotoEdit.classList.add('hidden');
   document.querySelector('body').classList.remove('modal-open');
+  uploadFileInput.value = '';
   editPopupCLoseButton.removeEventListener('click', onEditPopupClick);
   document.removeEventListener('keydown', onEditPopupEscDown);
 }
+
+new Pristine(userPhotoForm);
