@@ -46,4 +46,18 @@ function closeEditPhotosPopup () {
   document.removeEventListener('keydown', onEditPopupEscDown);
 }
 
-new Pristine(userPhotoForm);
+// const pristine = new Pristine(userPhotoForm, {
+//   classTo: 'text__hashtags',
+//   errorTextParent: 'text__hashtags',
+//   errorTextCLass: 'text__hashtags-error-text',
+// });
+
+// ^#[A-Za-zА-Яа-яЁё0-9]{1,19}$
+
+// userPhotoForm.addEventListener('submit', (evt) => {
+//   evt.preventDefault();
+//   const isValid = pristine.validate();
+//   if (isValid) {
+//     console.log ('good form');
+//   }
+// });
