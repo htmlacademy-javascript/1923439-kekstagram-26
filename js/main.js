@@ -3,6 +3,7 @@ import {renderUsersMiniatures} from './users_photo_miniatures.js';
 import './users_photo_big.js';
 import './comments.js';
 import './util.js';
+import './form.js';
 
 
 // Задаём переменную-хранилище для нашего готового массива с фотографиями
