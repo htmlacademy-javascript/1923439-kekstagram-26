@@ -12,9 +12,28 @@ const editPopupCLoseButton = document.querySelector('#upload-cancel');
 // Находим форму для загрузки фотографии пользователем
 const userPhotoForm = document.querySelector('.img-upload__form');
 
+// Находим значение инпута с хэштегами
+const hushtagsFieldValue = userPhotoForm.querySelector('.text__hashtags').value;
+
+// Находим инпут с хэштегами
+const hushtagsField = userPhotoForm.querySelector('.text__hashtags');
+
+// Находим инпут с комментариями
+const commentField = userPhotoForm.querySelector('.text__description');
+
 
 // Добавляем обработчик показа формы редактирования изображения
 uploadFileInput.addEventListener('change', openEditPhotosPopap);
+
+// Остановка обработчика на поле в фокусе
+const stopListenerOnFocus = (firstObject, secondObject) => {
+  firstObject.addEventListener('keydown', (evt) => {
+    evt.stopImmediatePropagation();
+  });
+  secondObject.addEventListener('keydown', (evt) => {
+    evt.stopImmediatePropagation();
+  });
+};
 
 // функция проверки и закрытия если нажат esc и удаления обработчика
 const onEditPopupEscDown = (evt) => {
@@ -39,6 +58,7 @@ function openEditPhotosPopap () {
 
 // функция закрытия попапа редактирования фотографии
 function closeEditPhotosPopup () {
+  stopListenerOnFocus(hushtagsField, commentField);
   formPhotoEdit.classList.add('hidden');
   document.querySelector('body').classList.remove('modal-open');
   uploadFileInput.value = '';
@@ -57,13 +77,6 @@ const pristine = new Pristine(userPhotoForm, {
 });
 
 
-// const checkUniqHushtag = (hushtagsField) => {
-//   const hushtagsArray = hushtagsField.split(' ');
-//   const unicArray = new Set(hushtagsArray);
-//   console.log(unicArray.length);
-//   console.log(hushtagsArray.length);
-// };
-
 // Функция проверки длинны комментария
 const checkCommentLength = (commentsValue) => commentsValue.length <= MAX_LENGTH_COMMENT;
 
@@ -78,8 +91,10 @@ const checkHushtagsUniq = (hushtagsValue) => {
   const regularHustags = /^#[A-Za-zА-Яа-яЁё0-9]{2,19}(\s#[A-Za-zА-Яа-яЁё0-9]{2,19}){0,4}$/i;
   const hushtagsArray = hushtagsValue.split(' ');
   const unicArray = new Set(hushtagsArray);
-  return unicArray.length === hushtagsArray && regularHustags.test(hushtagsValue);
+  return unicArray.size === hushtagsArray.length && regularHustags.test(hushtagsValue);
 };
+
+checkHushtagsUniq(hushtagsFieldValue);
 
 pristine.addValidator(userPhotoForm.querySelector('.text__hashtags',
   checkHushtagsLength,
@@ -93,9 +108,9 @@ pristine.addValidator(userPhotoForm.querySelector('.text__description',
   checkCommentLength,
   'Не более 140 символов'));
 
-// userPhotoForm.addEventListener('submit', (evt) => {
-//   evt.preventDefault();
-//   pristine.validate();
+userPhotoForm.addEventListener('submit', (evt) => {
+  evt.preventDefault();
+  pristine.validate();
 //   // const usersHushtagsField = userPhotoForm.querySelector('.text__hashtags').value;
 //   // const regularHustags = /^#[A-Za-zА-Яа-яЁё0-9]{2,19}(\s#[A-Za-zА-Яа-яЁё0-9]{2,19}){0,4}$/i;
 //   // const isValid = pristine.validate();
@@ -104,5 +119,5 @@ pristine.addValidator(userPhotoForm.querySelector('.text__description',
 //   // } else {
 //   //   console.log('invalid form');
 //   // }
-// });
+});
 
