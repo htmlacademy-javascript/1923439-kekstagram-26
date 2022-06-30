@@ -47,5 +47,15 @@ const createElement = (tagName, className) => {
 // Создаём функцию проверки нажатия esc на клавиатуре
 const isEscapeDown = (evt) => evt.key === 'Escape';
 
+// Функция остановки обработчика на поле в фокусе
+const stopListenerOnFocus = (firstObject, secondObject) => {
+  firstObject.addEventListener('keydown', (evt) => {
+    evt.stopImmediatePropagation();
+  });
+  secondObject.addEventListener('keydown', (evt) => {
+    evt.stopImmediatePropagation();
+  });
+};
 
-export {getRandomArrayElement, getPositiveRandomInt, checksLength, MAX_COUNT, MAX_LENGTH_COMMENT, shuffleArray, getOrderUnicArray, createElement, isEscapeDown};
+
+export {getRandomArrayElement, getPositiveRandomInt, checksLength, MAX_COUNT, MAX_LENGTH_COMMENT, shuffleArray, getOrderUnicArray, createElement, isEscapeDown, stopListenerOnFocus};

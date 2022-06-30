@@ -7,7 +7,7 @@ const MAX_HASHTAGS_COUNT = 5;
 const MIN_HASHTAGS_LENGTH = 2;
 
 // Максимальное количество символов в хэштеге
-const MAX_HASHTAGS_LENGTH = 2;
+const MAX_HASHTAGS_LENGTH = 20;
 
 // Находим форму для загрузки фотографии пользователем
 const userPhotoForm = document.querySelector('.img-upload__form');
@@ -20,12 +20,6 @@ const commentField = userPhotoForm.querySelector('.text__description');
 
 // Регулярка для проверки Символов
 const regHashtagSymbol = /^#[A-Za-zА-Яа-яЁё0-9]{0,100}(\s#[A-Za-zА-Яа-яЁё0-9]{0,100}){0,20}$/i;
-
-// Регулярка для проверки наличия # в начале хэштега
-const regHashtagStart = /^#[A-Za-zА-Яа-яЁё0-9]{0,200}(\s#[A-Za-zА-Яа-яЁё0-9]{0,200}){0,20}$/i;
-
-// Регулярка для проверки длины хэштега
-const regHashtagLength = /^#[A-Za-zА-Яа-яЁё0-9]{2,19}(\s#[A-Za-zА-Яа-яЁё0-9]{2,19}){0,20}$/i;
 
 
 // Создаём Pristine и настройки сообщений об ошибках
@@ -45,15 +39,9 @@ const checkCommentLength = (commentsValue) => commentsValue.length <= MAX_LENGTH
 checkCommentLength(commentField);
 
 // Функция валидации символики
-const checkHushtagsSymbol = (hashtagsValue) => {
+const checkHashtagsSymbol = (hashtagsValue) => {
   const regularHashtags = regHashtagSymbol;
   return regularHashtags.test(hashtagsValue) || hashtagsValue === '';
-};
-
-// Функция валидации наличия #
-const checkHushtagsStart = (hashtagsValue) => {
-  const regularHushtags = regHashtagStart;
-  return regularHushtags.test(hashtagsValue) || hashtagsValue === '';
 };
 
 // Функция валидации уникальности хэштегов
@@ -70,15 +58,41 @@ const checkHushtagsCount = (hashtagsValue) => {
 };
 
 // Функция валидации длинны одного хэштега
-const checkHashtagLength = (hashtagsValue) => {
-  const regularHashtags = regHashtagLength;
-  return regularHashtags.test(hashtagsValue) || hashtagsValue === '';
+const checkLengthHashtags = (hashtagsValue) => {
+  const hashtagsArray = hashtagsValue.split(' ');
+  let hashtagLength;
+  for (let i = 0; i < hashtagsArray.length; i++) {
+    hashtagLength = [... hashtagsArray[i]];
+    if (hashtagsValue === '') {
+      return true;
+    }
+    if (hashtagLength.length < MIN_HASHTAGS_LENGTH || hashtagLength.length >= MAX_HASHTAGS_LENGTH) {
+      return false;
+    }
+  }
+  return true;
+};
+
+// Функция валидации наличия #
+const checkfirstSymbolHashtags = (hashtagsValue) => {
+  const hashtagsArray = hashtagsValue.split(' ');
+  let hashtagLength;
+  for (let i = 0; i < hashtagsArray.length; i++) {
+    hashtagLength = [... hashtagsArray[i]];
+    if (hashtagsValue === '') {
+      return true;
+    }
+    if (hashtagLength[0] !== '#') {
+      return false;
+    }
+  }
+  return true;
 };
 
 
 // Валидаторы
 pristine.addValidator(hashtagsField,
-  checkHushtagsStart,
+  checkfirstSymbolHashtags,
   'Хэштег должен начинаться с #');
 
 pristine.addValidator(hashtagsField,
@@ -86,11 +100,11 @@ pristine.addValidator(hashtagsField,
   `Максимум ${  MAX_HASHTAGS_COUNT  } хэштегов!`);
 
 pristine.addValidator(hashtagsField,
-  checkHashtagLength,
+  checkLengthHashtags,
   `Хэштег должен быть от ${ MIN_HASHTAGS_LENGTH } до ${ MAX_HASHTAGS_LENGTH } символов`);
 
 pristine.addValidator(hashtagsField,
-  checkHushtagsSymbol,
+  checkHashtagsSymbol,
   'Между хэштегами должен быть пробел');
 
 pristine.addValidator(hashtagsField,
@@ -102,9 +116,9 @@ pristine.addValidator(commentField,
   `Не более ${ MAX_LENGTH_COMMENT } символов`);
 
 userPhotoForm.addEventListener('submit', (evt) => {
-  evt.preventDefault();
-  pristine.validate();
+  if (pristine.validate() === false) {
+    evt.preventDefault();
+  }
 });
-
 
 export {hashtagsField, commentField};

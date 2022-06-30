@@ -1,4 +1,4 @@
-import {isEscapeDown} from './util.js';
+import {isEscapeDown, stopListenerOnFocus} from './util.js';
 import {hashtagsField, commentField} from './form_validation.js';
 
 // Находим поле в котором будет путь до локальной фотографии пользователя
@@ -14,15 +14,6 @@ const editPopupCLoseButton = document.querySelector('#upload-cancel');
 // Добавляем обработчик показа формы редактирования изображения
 uploadFileInput.addEventListener('change', openEditPhotosPopup);
 
-// Остановка обработчика на поле в фокусе
-const stopListenerOnFocus = (firstObject, secondObject) => {
-  firstObject.addEventListener('keydown', (evt) => {
-    evt.stopImmediatePropagation();
-  });
-  secondObject.addEventListener('keydown', (evt) => {
-    evt.stopImmediatePropagation();
-  });
-};
 
 // функция проверки и закрытия если нажат esc и удаления обработчика
 const onEditPopupEscDown = (evt) => {
