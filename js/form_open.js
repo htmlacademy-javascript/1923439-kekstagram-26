@@ -1,5 +1,5 @@
 import {isEscapeDown} from './util.js';
-import {hushtagsField, commentField} from './form_validation.js';
+import {hashtagsField, commentField} from './form_validation.js';
 
 // Находим поле в котором будет путь до локальной фотографии пользователя
 const uploadFileInput = document.querySelector('#upload-file');
@@ -39,7 +39,7 @@ const onEditPopupClick = () => {
 
 // функция открытия попапа редактирования фотографии
 function openEditPhotosPopup () {
-  stopListenerOnFocus(hushtagsField, commentField);
+  stopListenerOnFocus(hashtagsField, commentField);
   formPhotoEdit.classList.remove('hidden');
   document.querySelector('body').classList.add('modal-open');
   editPopupCLoseButton.addEventListener('click', onEditPopupClick);

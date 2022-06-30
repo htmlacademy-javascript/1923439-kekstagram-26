@@ -13,7 +13,7 @@ const MAX_HASHTAGS_LENGTH = 2;
 const userPhotoForm = document.querySelector('.img-upload__form');
 
 // Находим инпут с хэштегами
-const hushtagsField = userPhotoForm.querySelector('.text__hashtags');
+const hashtagsField = userPhotoForm.querySelector('.text__hashtags');
 
 // Находим инпут с комментариями
 const commentField = userPhotoForm.querySelector('.text__description');
@@ -45,55 +45,55 @@ const checkCommentLength = (commentsValue) => commentsValue.length <= MAX_LENGTH
 checkCommentLength(commentField);
 
 // Функция валидации символики
-const checkHushtagsSymbol = (hushtagsValue) => {
-  const regularHustags = regHashtagSymbol;
-  return regularHustags.test(hushtagsValue) || hushtagsValue === '';
+const checkHushtagsSymbol = (hashtagsValue) => {
+  const regularHashtags = regHashtagSymbol;
+  return regularHashtags.test(hashtagsValue) || hashtagsValue === '';
 };
 
 // Функция валидации наличия #
-const checkHushtagsStart = (hushtagsValue) => {
-  const regularHustags = regHashtagStart;
-  return regularHustags.test(hushtagsValue) || hushtagsValue === '';
+const checkHushtagsStart = (hashtagsValue) => {
+  const regularHushtags = regHashtagStart;
+  return regularHushtags.test(hashtagsValue) || hashtagsValue === '';
 };
 
 // Функция валидации уникальности хэштегов
-const checkHushtagsUniq = (hushtagsValue) => {
-  const hushtagsArray = hushtagsValue.trim().toLowerCase().split(' ');
-  const mayArray = new Set(hushtagsArray);
-  return mayArray.size === hushtagsArray.length || hushtagsValue === '';
+const checkHushtagsUniq = (hashtagsValue) => {
+  const hashtagsArray = hashtagsValue.trim().toLowerCase().split(' ');
+  const mayArray = new Set(hashtagsArray);
+  return mayArray.size === hashtagsArray.length || hashtagsValue === '';
 };
 
 // Функция валидации максимального количества хэштегов
-const checkHushtagsCount = (hushtagsValue) => {
-  const hushtagsArray = hushtagsValue.trim().toLowerCase().split(' ');
-  return hushtagsArray.length <= MAX_HASHTAGS_COUNT;
+const checkHushtagsCount = (hashtagsValue) => {
+  const hashtagsArray = hashtagsValue.trim().toLowerCase().split(' ');
+  return hashtagsArray.length <= MAX_HASHTAGS_COUNT;
 };
 
 // Функция валидации длинны одного хэштега
 const checkHashtagLength = (hashtagsValue) => {
-  const regularHustags = regHashtagLength;
-  return regularHustags.test(hashtagsValue) || hashtagsValue === '';
+  const regularHashtags = regHashtagLength;
+  return regularHashtags.test(hashtagsValue) || hashtagsValue === '';
 };
 
 
 // Валидаторы
-pristine.addValidator(hushtagsField,
+pristine.addValidator(hashtagsField,
   checkHushtagsStart,
   'Хэштег должен начинаться с #');
 
-pristine.addValidator(hushtagsField,
+pristine.addValidator(hashtagsField,
   checkHushtagsCount,
   `Максимум ${  MAX_HASHTAGS_COUNT  } хэштегов!`);
 
-pristine.addValidator(hushtagsField,
+pristine.addValidator(hashtagsField,
   checkHashtagLength,
   `Хэштег должен быть от ${ MIN_HASHTAGS_LENGTH } до ${ MAX_HASHTAGS_LENGTH } символов`);
 
-pristine.addValidator(hushtagsField,
+pristine.addValidator(hashtagsField,
   checkHushtagsSymbol,
   'Между хэштегами должен быть пробел');
 
-pristine.addValidator(hushtagsField,
+pristine.addValidator(hashtagsField,
   checkHushtagsUniq,
   'Хэштеги должны быть уникальными!');
 
@@ -107,4 +107,4 @@ userPhotoForm.addEventListener('submit', (evt) => {
 });
 
 
-export {hushtagsField, commentField};
+export {hashtagsField, commentField};
