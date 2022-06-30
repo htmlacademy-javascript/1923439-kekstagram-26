@@ -60,10 +60,10 @@ const checkHushtagsCount = (hashtagsValue) => {
 // Функция валидации длинны одного хэштега
 const checkLengthHashtags = (hashtagsValue) => {
   const hashtagsArray = hashtagsValue.split(' ');
+  if (hashtagsValue === '') {
+    return true;
+  }
   for (let i = 0; i < hashtagsArray.length; i++) {
-    if (hashtagsValue === '') {
-      return true;
-    }
     if (hashtagsArray[i].length < MIN_HASHTAGS_LENGTH || hashtagsArray[i].length >= MAX_HASHTAGS_LENGTH) {
       return false;
     }
@@ -74,10 +74,10 @@ const checkLengthHashtags = (hashtagsValue) => {
 // Функция валидации наличия #
 const checkfirstSymbolHashtags = (hashtagsValue) => {
   const hashtagsArray = hashtagsValue.split(' ');
+  if (hashtagsValue === '') {
+    return true;
+  }
   for (let i = 0; i < hashtagsArray.length; i++) {
-    if (hashtagsValue === '') {
-      return true;
-    }
     if (hashtagsArray[i][0] !== '#') {
       return false;
     }
