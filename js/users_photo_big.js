@@ -19,7 +19,7 @@ const commentsCount = bigPictureSection.querySelector('.comments-count');
 const photoDescription = bigPictureSection.querySelector('.social__caption');
 
 // Находим диапозон отображаемых комментариев
-const commentCountRange = bigPictureSection.querySelector('.social__comment-count');
+// const commentCountRange = bigPictureSection.querySelector('.social__comment-count');
 
 // Находим кнопку загрузки свежей порции комментариев
 const commentShowMoreButton = bigPictureSection.querySelector('.social__comments-loader');
@@ -39,8 +39,8 @@ const onPopupClickOff = () => {
 function openBigPicture () {
   bigPictureSection.classList.remove('hidden');
   document.querySelector('body').classList.add('modal-open');
-  commentCountRange.classList.add('hidden');
-  commentShowMoreButton.classList.add('hidden');
+  // commentCountRange.classList.add('hidden');
+  // commentShowMoreButton.classList.add('hidden');
   document.addEventListener('keydown', onPopupEscKeydown);
   bigPictureClose.addEventListener('click', onPopupClickOff);
 }
@@ -54,19 +54,66 @@ function closeBigPicture () {
 
 
 // Функция добавляющая в разметку комментарии пользователей
-const renderBigPhotosComment = (comments) => {
-  comments.forEach(({avatar, message, name}) => {
-    const commentsList = document.querySelector('.social__comments');
-    const commentsItem = createElement('li', 'social__comment');
-    const commentsItemImg = createElement('img', 'social__picture');
-    const commentsItemText = createElement('p', 'social__text');
-    commentsItemImg.src = avatar;
-    commentsItemImg.alt = name;
-    commentsItemText.textContent = message;
-    commentsItem.appendChild(commentsItemImg);
-    commentsItem.appendChild(commentsItemText);
-    commentsList.appendChild(commentsItem);
+// const renderBigPhotosComment = (comments) => {
+//   comments.forEach(({avatar, message, name}) => {
+//     const commentsList = document.querySelector('.social__comments');
+//     const commentsItem = createElement('li', 'social__comment');
+//     const commentsItemImg = createElement('img', 'social__picture');
+//     const commentsItemText = createElement('p', 'social__text');
+//     commentsItemImg.src = avatar;
+//     commentsItemImg.alt = name;
+//     commentsItemText.textContent = message;
+//     commentsItem.appendChild(commentsItemImg);
+//     commentsItem.appendChild(commentsItemText);
+//     commentsList.appendChild(commentsItem);
+//   });
+// };
+
+// Тест идеи!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+let commentsMax = 5;
+let commentsMin = 5;
+
+
+const renderMoreCommentOnCLick = (comments) => {
+  commentShowMoreButton.addEventListener('click', () => {
+    (function () {
+      commentsMax += 5;
+      // console.log(commentsMin,commentsMax);
+      if (commentsMax <= comments.length || commentsMin <= comments.length) {
+        for (let i = commentsMin; i < comments.length && i < commentsMax; i++) {
+          const commentsList = document.querySelector('.social__comments');
+          const commentsItem = createElement('li', 'social__comment');
+          const commentsItemImg = createElement('img', 'social__picture');
+          const commentsItemText = createElement('p', 'social__text');
+          commentsItemImg.src = comments[i].avatar;
+          commentsItemImg.alt = comments[i].name;
+          commentsItemText.textContent = comments[i].message;
+          commentsItem.appendChild(commentsItemImg);
+          commentsItem.appendChild(commentsItemText);
+          commentsList.appendChild(commentsItem);
+        }
+      }
+      commentsMin += 5;
+    }());
   });
+};
+
+const renderBigPhotosComment = (comments) => {
+  (function () {
+    commentsMax = 5;
+    for (let i = 0; i < commentsMax && i < comments.length; i++) {
+      const commentsList = document.querySelector('.social__comments');
+      const commentsItem = createElement('li', 'social__comment');
+      const commentsItemImg = createElement('img', 'social__picture');
+      const commentsItemText = createElement('p', 'social__text');
+      commentsItemImg.src = comments[i].avatar;
+      commentsItemImg.alt = comments[i].name;
+      commentsItemText.textContent = comments[i].message;
+      commentsItem.appendChild(commentsItemImg);
+      commentsItem.appendChild(commentsItemText);
+      commentsList.appendChild(commentsItem);
+    }
+  }());
 };
 
 // Функция добавляющая в разметку информацию о большой фотографии
@@ -78,4 +125,4 @@ const renderBigPhotosInfo = ({url, likes, comments, description}) => {
 };
 
 
-export {bigPicture, renderBigPhotosInfo, renderBigPhotosComment, openBigPicture, closeBigPicture, onPopupEscKeydown};
+export {bigPicture, renderBigPhotosInfo, renderBigPhotosComment, openBigPicture, closeBigPicture, onPopupEscKeydown, renderMoreCommentOnCLick};

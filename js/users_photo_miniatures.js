@@ -1,4 +1,4 @@
-import { renderBigPhotosInfo, renderBigPhotosComment, openBigPicture} from './users_photo_big.js';
+import { renderBigPhotosInfo, renderBigPhotosComment, openBigPicture, renderMoreCommentOnCLick} from './users_photo_big.js';
 const usersMiniaturesContainer = document.querySelector('.pictures');
 const usersMiniaturesTemplate = document.querySelector('#picture').content.querySelector('.picture');
 
@@ -16,6 +16,7 @@ const renderUsersMiniatures = (photosArray) => {
       renderBigPhotosInfo(photoObject);
       document.querySelector('.social__comments').replaceChildren();
       renderBigPhotosComment(comments);
+      renderMoreCommentOnCLick(comments);
       openBigPicture();
     });
     usersMiniaturesFragment.appendChild(usersMiniaturesElement);
