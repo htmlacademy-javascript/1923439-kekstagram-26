@@ -24,6 +24,7 @@ const commentCountRange = bigPictureSection.querySelector('.social__comment-coun
 // Находим кнопку загрузки свежей порции комментариев
 const commentShowMoreButton = bigPictureSection.querySelector('.social__comments-loader');
 
+const firstCommentsCount = 5;
 let commentsMax = 5;
 let commentsMin = 5;
 
@@ -42,10 +43,11 @@ const onPopupClickOff = () => {
 function openBigPicture () {
   bigPictureSection.classList.remove('hidden');
   document.querySelector('body').classList.add('modal-open');
-  // commentCountRange.classList.add('hidden');
-  // commentShowMoreButton.classList.add('hidden');
   document.addEventListener('keydown', onPopupEscKeydown);
   bigPictureClose.addEventListener('click', onPopupClickOff);
+  commentShowMoreButton.addEventListener('click', renderMoreCommentOnCLickOff);
+  commentsMax = 5;
+  commentsMin = 5;
 }
 
 function closeBigPicture () {
@@ -53,8 +55,7 @@ function closeBigPicture () {
   document.querySelector('body').classList.remove('modal-open');
   document.removeEventListener('keydown', onPopupEscKeydown);
   bigPictureClose.removeEventListener('click', onPopupClickOff);
-  commentsMax = 5;
-  commentsMin = 5;
+  commentShowMoreButton.removeEventListener('click', renderMoreCommentOnCLickOff);
 }
 
 
@@ -76,34 +77,36 @@ function closeBigPicture () {
 
 // Тест идеи!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
-const renderMoreCommentOnCLick = (comments) => {
-  commentShowMoreButton.addEventListener('click', () => {
-    commentsMax += 5;
-    (function () {
-      console.log(commentsMin,commentsMax);
-      if (commentsMax <= comments.length || commentsMin <= comments.length) {
-        for (let i = commentsMin; i < comments.length && i < commentsMax; i++) {
-          const commentsList = document.querySelector('.social__comments');
-          const commentsItem = createElement('li', 'social__comment');
-          const commentsItemImg = createElement('img', 'social__picture');
-          const commentsItemText = createElement('p', 'social__text');
-          commentsItemImg.src = comments[i].avatar;
-          commentsItemImg.alt = comments[i].name;
-          commentsItemText.textContent = comments[i].message;
-          commentsItem.appendChild(commentsItemImg);
-          commentsItem.appendChild(commentsItemText);
-          commentsList.appendChild(commentsItem);
-        }
+function renderMoreCommentOnCLickOff (comments) {
+  renderMoreCommentOnCLick(comments);
+}
+
+function renderMoreCommentOnCLick (comments) {
+  commentsMax += 5;
+  console.log(commentsMin,commentsMax);
+  (function () {
+    if (commentsMax <= comments.length || commentsMin <= comments.length) {
+      for (let i = commentsMin; i < comments.length && i < commentsMax; i++) {
+        const commentsList = document.querySelector('.social__comments');
+        const commentsItem = createElement('li', 'social__comment');
+        const commentsItemImg = createElement('img', 'social__picture');
+        const commentsItemText = createElement('p', 'social__text');
+        commentsItemImg.src = comments[i].avatar;
+        commentsItemImg.alt = comments[i].name;
+        commentsItemText.textContent = comments[i].message;
+        commentsItem.appendChild(commentsItemImg);
+        commentsItem.appendChild(commentsItemText);
+        commentsList.appendChild(commentsItem);
       }
-      commentsMin += 5;
-    }());
-  });
-};
+    }
+    commentsMin += 5;
+  }());
+  commentShowMoreButton.removeEventListener('click', renderMoreCommentOnCLickOff);
+}
 
 const renderBigPhotosComment = (comments) => {
   (function () {
-    commentsMax = 5;
-    for (let i = 0; i < commentsMax && i < comments.length; i++) {
+    for (let i = 0; i < firstCommentsCount && i < comments.length; i++) {
       const commentsList = document.querySelector('.social__comments');
       const commentsItem = createElement('li', 'social__comment');
       const commentsItemImg = createElement('img', 'social__picture');
@@ -127,4 +130,4 @@ const renderBigPhotosInfo = ({url, likes, comments, description}) => {
 };
 
 
-export {bigPicture, renderBigPhotosInfo, renderBigPhotosComment, openBigPicture, closeBigPicture, onPopupEscKeydown, renderMoreCommentOnCLick};
+export {bigPicture, renderBigPhotosInfo, renderBigPhotosComment, openBigPicture, closeBigPicture, onPopupEscKeydown, renderMoreCommentOnCLick, renderMoreCommentOnCLickOff, commentShowMoreButton};
