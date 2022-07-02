@@ -16,8 +16,8 @@ const renderUsersMiniatures = (photosArray) => {
       renderBigPhotosInfo(photoObject);
       document.querySelector('.social__comments').replaceChildren();
       renderBigPhotosComment(comments);
-      renderMoreCommentOnCLick(comments);
       openBigPicture();
+      renderMoreCommentOnCLick(comments);
     });
     usersMiniaturesFragment.appendChild(usersMiniaturesElement);
   });
