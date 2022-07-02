@@ -19,10 +19,13 @@ const commentsCount = bigPictureSection.querySelector('.comments-count');
 const photoDescription = bigPictureSection.querySelector('.social__caption');
 
 // Находим диапозон отображаемых комментариев
-// const commentCountRange = bigPictureSection.querySelector('.social__comment-count');
+const commentCountRange = bigPictureSection.querySelector('.social__comment-count');
 
 // Находим кнопку загрузки свежей порции комментариев
 const commentShowMoreButton = bigPictureSection.querySelector('.social__comments-loader');
+
+let commentsMax = 5;
+let commentsMin = 5;
 
 const onPopupEscKeydown = (evt) => {
   if (isEscapeDown(evt)) {
@@ -50,6 +53,8 @@ function closeBigPicture () {
   document.querySelector('body').classList.remove('modal-open');
   document.removeEventListener('keydown', onPopupEscKeydown);
   bigPictureClose.removeEventListener('click', onPopupClickOff);
+  commentsMax = 5;
+  commentsMin = 5;
 }
 
 
@@ -70,15 +75,12 @@ function closeBigPicture () {
 // };
 
 // Тест идеи!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-let commentsMax = 5;
-let commentsMin = 5;
-
 
 const renderMoreCommentOnCLick = (comments) => {
   commentShowMoreButton.addEventListener('click', () => {
+    commentsMax += 5;
     (function () {
-      commentsMax += 5;
-      // console.log(commentsMin,commentsMax);
+      console.log(commentsMin,commentsMax);
       if (commentsMax <= comments.length || commentsMin <= comments.length) {
         for (let i = commentsMin; i < comments.length && i < commentsMax; i++) {
           const commentsList = document.querySelector('.social__comments');
