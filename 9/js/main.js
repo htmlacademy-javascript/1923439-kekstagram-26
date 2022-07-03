@@ -14,3 +14,5 @@ const photosMiniaturesArray = getPhotosArray(USERS_PHOTOS_COUNT);
 
 // Отрисовываем миниатюры фотографий пользователей
 renderUsersMiniatures(photosMiniaturesArray);
+
+export {photosMiniaturesArray};
