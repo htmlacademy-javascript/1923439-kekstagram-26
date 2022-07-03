@@ -1,5 +1,8 @@
 import { createElement, isEscapeDown } from './util.js';
 
+// Максимальное количество отображаемых комментариев за один раз
+const MAX_COMMENT_ON_PAGE = 5;
+
 // Находим секцию детального просмотра фотографий
 const bigPictureSection = document.querySelector('.big-picture');
 
@@ -21,13 +24,13 @@ const photoDescription = bigPictureSection.querySelector('.social__caption');
 // Находим кнопку загрузки свежей порции комментариев
 const commentShowMoreButton = bigPictureSection.querySelector('.social__comments-loader');
 
-// Максимальное количество отображаемых комментариев
-const MAX_COMMENT_ON_PAGE = 5;
+// Текущее значение пагинации комментариев
+let currPage = 1;
 
-let page = 0;
+// переменная для доступа к эллементу массива с комментариями
 let commentsAll = [];
 
-
+// Функция для удаления обработчика закрытия по нажатию esc
 const onPopupEscKeydown = (evt) => {
   if (isEscapeDown(evt)) {
     evt.preventDefault();
@@ -35,11 +38,12 @@ const onPopupEscKeydown = (evt) => {
   }
 };
 
+// Функция для удаления обработчика закрытия по клику
 const onPopupClickOff = () => {
   closeBigPicture();
 };
 
-
+// функция для закрытия окна просмотра большой фотографии
 function closeBigPicture () {
   bigPictureSection.classList.add('hidden');
   document.querySelector('body').classList.remove('modal-open');
@@ -48,25 +52,7 @@ function closeBigPicture () {
   commentShowMoreButton.removeEventListener('click', renderMoreCommentOnCLickOFF);
 }
 
-// Функция добавляющая в разметку комментарии пользователей
-// const renderBigPhotosComment = (comments) => {
-//   comments.forEach(({avatar, message, name}) => {
-//     const commentsList = document.querySelector('.social__comments');
-//     const commentsItem = createElement('li', 'social__comment');
-//     const commentsItemImg = createElement('img', 'social__picture');
-//     const commentsItemText = createElement('p', 'social__text');
-//     commentsItemImg.src = avatar;
-//     commentsItemImg.alt = name;
-//     commentsItemText.textContent = message;
-//     commentsItem.appendChild(commentsItemImg);
-//     commentsItem.appendChild(commentsItemText);
-//     commentsList.appendChild(commentsItem);
-//   });
-// };
-
-// Тест идеи!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
-
+// Функция для отрисовки одного комментария
 const renderComment = (comment) => {
   const commentsList = document.querySelector('.social__comments');
   const commentsItem = createElement('li', 'social__comment');
@@ -80,22 +66,24 @@ const renderComment = (comment) => {
   commentsList.appendChild(commentsItem);
 };
 
-const renderBigPhotosComments = (comments) => {
-  for (let i = page; i < MAX_COMMENT_ON_PAGE + page && i < comments.length; i++) {
+const renderBigPhotosComments = (comments, page) => {
+  const start = (page - 1) * MAX_COMMENT_ON_PAGE;
+  let end = page * MAX_COMMENT_ON_PAGE;
+  for (let i = start; i < end && i < comments.length; i++) {
     renderComment(comments[i]);
   }
-  page += 5;
   const commentCountRange = bigPictureSection.querySelector('.social__comment-count');
-  if (page >= comments.length) {
+  if (end >= comments.length) {
     commentShowMoreButton.classList.add('hidden');
-    commentCountRange.textContent = `${comments.length  } из ${  comments.length} комментариев`;
-  } else {
-    commentCountRange.textContent = `${page  } из ${  comments.length} комментариев`;
+    end = comments.length;
   }
+  commentCountRange.textContent = `${end  } из ${  comments.length} комментариев`;
 };
 
+// Функция для удаления обработчика по клику на "Загрузить ещё"
 function renderMoreCommentOnCLickOFF () {
-  renderBigPhotosComments(commentsAll);
+  currPage++;
+  renderBigPhotosComments(commentsAll, currPage);
 }
 
 // Функция добавляющая в разметку информацию о большой фотографии
@@ -105,12 +93,12 @@ const renderBigPhotosInfo = ({url, likes, comments, description}) => {
   commentsCount.textContent = comments.length;
   photoDescription.textContent = description;
   document.querySelector('.social__comments').replaceChildren();
-  renderBigPhotosComments(comments);
+  renderBigPhotosComments(comments, currPage);
 };
 
-
+// Функция для отрисовки окна с большой фотографией
 const openBigPicture = (photosObject) => {
-  page = 0;
+  currPage = 1;
   commentShowMoreButton.classList.remove('hidden');
   renderBigPhotosInfo(photosObject);
   bigPictureSection.classList.remove('hidden');
