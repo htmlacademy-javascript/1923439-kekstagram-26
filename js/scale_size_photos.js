@@ -30,4 +30,4 @@ const smallerPhoto = () => {
   }
 };
 
-export {imgPreview, scaleBigger, scaleSmaller, biggerPhoto, smallerPhoto}
+export {imgPreview, scaleBigger, scaleSmaller, biggerPhoto, smallerPhoto};

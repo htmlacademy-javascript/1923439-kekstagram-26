@@ -12,8 +12,6 @@ import './scale_size_photos.js';
 // Задаём переменную-хранилище для нашего готового массива с фотографиями
 const photosMiniaturesArray = getPhotosArray(USERS_PHOTOS_COUNT);
 
-// console.log(photosMiniaturesArray);
-
 // Отрисовываем миниатюры фотографий пользователей
 renderUsersMiniatures(photosMiniaturesArray);
 

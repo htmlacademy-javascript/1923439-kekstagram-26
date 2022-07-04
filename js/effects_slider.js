@@ -1,4 +1,4 @@
-import {imgPreview} from './scale_size_photos.js'
+import {imgPreview} from './scale_size_photos.js';
 const sliderElement = document.querySelector('.effect-level__slider');
 const sliderValue = document.querySelector('.effect-level__value');
 const chromeEffect = document.querySelector('#effect-chrome');
@@ -8,7 +8,7 @@ const phobosEffect = document.querySelector('#effect-phobos');
 const heatEffect = document.querySelector('#effect-heat');
 const originalEffect = document.querySelector('#effect-none');
 
-
+// Создаём слайдер
 noUiSlider.create(sliderElement, {
   range: {
     min: 1,
@@ -30,7 +30,7 @@ noUiSlider.create(sliderElement, {
   },
 });
 
-
+// Функция для обновления ключей стайдера
 const updateSliderOptionsNew = (min, max, step, start) => {
   sliderElement.noUiSlider.updateOptions ({
     range: {
@@ -43,6 +43,7 @@ const updateSliderOptionsNew = (min, max, step, start) => {
 
 };
 
+// Функция для сброса до базовых значений ключей слайдера
 const updateSliderOptionsDefault = () => {
   sliderElement.noUiSlider.updateOptions ({
     range: {
@@ -54,6 +55,7 @@ const updateSliderOptionsDefault = () => {
   });
 };
 
+// Скрытие слайдера на оригинальном фильтре
 if (originalEffect.checked) {
   sliderElement.classList.add('hidden');
 }
@@ -140,5 +142,5 @@ originalEffect.addEventListener('change', (evt) => {
     sliderElement.classList.add('hidden');
     imgPreview.className = 'effects__preview--none';
   }
-  imgPreview.style.filter = `none`;
+  imgPreview.style.filter = 'none';
 });
