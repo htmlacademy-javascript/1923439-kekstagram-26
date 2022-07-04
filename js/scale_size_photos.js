@@ -30,6 +30,4 @@ const smallerPhoto = () => {
   }
 };
 
-scaleBigger.addEventListener('click', biggerPhoto);
-scaleSmaller.addEventListener('click', smallerPhoto);
-
+export {imgPreview, scaleBigger, scaleSmaller, biggerPhoto, smallerPhoto}
