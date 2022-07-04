@@ -40,6 +40,7 @@ const updateSliderOptionsNew = (min, max, step, start) => {
     step: step,
     start: start,
   });
+
 };
 
 const updateSliderOptionsDefault = () => {
@@ -62,9 +63,8 @@ chromeEffect.addEventListener('change', (evt) => {
   if (evt.target.checked) {
     sliderElement.classList.remove('hidden');
     updateSliderOptionsNew(0, 1, 0.1, 1);
-    imgPreview.classList.add('effects__preview--chrome');
+    imgPreview.className = 'effects__preview--chrome';
   } else {
-    imgPreview.classList.remove('effects__preview--chrome');
     updateSliderOptionsDefault();
   }
   sliderElement.noUiSlider.on('update', () => {
@@ -78,9 +78,8 @@ sepiaEffect.addEventListener('change', (evt) => {
   if (evt.target.checked) {
     sliderElement.classList.remove('hidden');
     updateSliderOptionsNew(0, 1, 0.1, 1);
-    imgPreview.classList.add('effects__preview--sepia');
+    imgPreview.className = 'effects__preview--sepia';
   } else {
-    imgPreview.classList.remove('effects__preview--sepia');
     updateSliderOptionsDefault();
   }
   sliderElement.noUiSlider.on('update', () => {
@@ -94,9 +93,8 @@ marvinEffect.addEventListener('change', (evt) => {
   if (evt.target.checked) {
     sliderElement.classList.remove('hidden');
     updateSliderOptionsNew(0, 100, 1, 100);
-    imgPreview.classList.add('effects__preview--marvin');
+    imgPreview.className = 'effects__preview--marvin';
   } else {
-    imgPreview.classList.remove('effects__preview--marvin');
     updateSliderOptionsDefault();
   }
   sliderElement.noUiSlider.on('update', () => {
@@ -110,9 +108,8 @@ phobosEffect.addEventListener('change', (evt) => {
   if (evt.target.checked) {
     sliderElement.classList.remove('hidden');
     updateSliderOptionsNew(0, 3, 0.1, 3);
-    imgPreview.classList.add('effects__preview--phobos');
+    imgPreview.className = 'effects__preview--phobos';
   } else {
-    imgPreview.classList.remove('effects__preview--phobos');
     updateSliderOptionsDefault();
   }
   sliderElement.noUiSlider.on('update', () => {
@@ -126,9 +123,8 @@ heatEffect.addEventListener('change', (evt) => {
   if (evt.target.checked) {
     sliderElement.classList.remove('hidden');
     updateSliderOptionsNew(1, 3, 0.1, 3);
-    imgPreview.classList.add('effects__preview--heat');
+    imgPreview.className = 'effects__preview--heat';
   } else {
-    imgPreview.classList.remove('effects__preview--heat');
     updateSliderOptionsDefault();
   }
   imgPreview.classList.add('effects__preview--heat');
@@ -142,6 +138,7 @@ heatEffect.addEventListener('change', (evt) => {
 originalEffect.addEventListener('change', (evt) => {
   if (evt.target.checked) {
     sliderElement.classList.add('hidden');
+    imgPreview.className = 'effects__preview--none';
   }
   imgPreview.style.filter = `none`;
 });
