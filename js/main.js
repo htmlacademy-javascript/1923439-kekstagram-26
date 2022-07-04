@@ -5,6 +5,8 @@ import './comments.js';
 import './util.js';
 import './form_open.js';
 import './form_validation.js';
+import './slider.js';
+import './scale_size_photos.js';
 
 
 // Задаём переменную-хранилище для нашего готового массива с фотографиями
