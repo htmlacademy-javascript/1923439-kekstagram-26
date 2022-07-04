@@ -17,7 +17,6 @@ const biggerPhoto = () => {
   }
 };
 
-
 const smallerPhoto = () => {
   scaleInput.value = `${parseInt(scaleInput.value, 10) - MIN_SIZE_VALUE }%`;
   imgPreview.style.transform = `scale(0.${parseInt(scaleInput.value, 10)}`;

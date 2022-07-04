@@ -5,7 +5,7 @@ import './comments.js';
 import './util.js';
 import './form_open.js';
 import './form_validation.js';
-import './slider.js';
+import './effects_slider.js';
 import './scale_size_photos.js';
 
 
