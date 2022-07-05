@@ -1,4 +1,6 @@
 import {imgPreview} from './scale_size_photos.js';
+
+const sliderContainer = document.querySelector('.img-upload__effect-level');
 const sliderElement = document.querySelector('.effect-level__slider');
 const sliderValue = document.querySelector('.effect-level__value');
 const chromeEffect = document.querySelector('#effect-chrome');
@@ -30,117 +32,123 @@ noUiSlider.create(sliderElement, {
   },
 });
 
-// Функция для обновления ключей стайдера
-const updateSliderOptionsNew = (min, max, step, start) => {
+// Скрытие слайдера на оригинальном фильтре
+if (originalEffect.checked) {
+  sliderContainer.classList.add('hidden');
+}
+
+// Функции эффектов фильтров фотографий
+const renderChromEffect = () => {
+  sliderContainer.classList.remove('hidden');
   sliderElement.noUiSlider.updateOptions ({
     range: {
-      min: min,
-      max: max,
+      min: 0,
+      max: 1,
     },
-    step: step,
-    start: start,
+    step: 0.1,
+    start: 1,
   });
-
+  sliderElement.noUiSlider.on('update', () => {
+    sliderValue.value = sliderElement.noUiSlider.get();
+    imgPreview.style.filter = `grayscale(${sliderValue.value})`;
+  });
 };
 
-// Функция для сброса до базовых значений ключей слайдера
-const updateSliderOptionsDefault = () => {
+const renderSepiaEffect = () => {
+  sliderContainer.classList.remove('hidden');
   sliderElement.noUiSlider.updateOptions ({
     range: {
-      min: 1,
+      min: 0,
+      max: 1,
+    },
+    step: 0.1,
+    start: 1,
+  });
+  sliderElement.noUiSlider.on('update', () => {
+    sliderValue.value = sliderElement.noUiSlider.get();
+    imgPreview.style.filter = `sepia(${sliderValue.value})`;
+  });
+};
+
+const renderMarvinEffect = () => {
+  sliderContainer.classList.remove('hidden');
+  sliderElement.noUiSlider.updateOptions ({
+    range: {
+      min: 0,
       max: 100,
     },
     step: 1,
     start: 100,
   });
-};
-
-// Скрытие слайдера на оригинальном фильтре
-if (originalEffect.checked) {
-  sliderElement.classList.add('hidden');
-}
-
-// Добавляем и обрабатываем хром эффект
-chromeEffect.addEventListener('change', (evt) => {
-  if (evt.target.checked) {
-    sliderElement.classList.remove('hidden');
-    updateSliderOptionsNew(0, 1, 0.1, 1);
-    imgPreview.className = 'effects__preview--chrome';
-  } else {
-    updateSliderOptionsDefault();
-  }
-  sliderElement.noUiSlider.on('update', () => {
-    sliderValue.value = sliderElement.noUiSlider.get();
-    imgPreview.style.filter = `grayscale(${sliderValue.value})`;
-  });
-});
-
-// Добавляем и обрабатываем сепия эффект
-sepiaEffect.addEventListener('change', (evt) => {
-  if (evt.target.checked) {
-    sliderElement.classList.remove('hidden');
-    updateSliderOptionsNew(0, 1, 0.1, 1);
-    imgPreview.className = 'effects__preview--sepia';
-  } else {
-    updateSliderOptionsDefault();
-  }
-  sliderElement.noUiSlider.on('update', () => {
-    sliderValue.value = sliderElement.noUiSlider.get();
-    imgPreview.style.filter = `sepia(${sliderValue.value})`;
-  });
-});
-
-// Добавляем и обрабатываем марвин эффект
-marvinEffect.addEventListener('change', (evt) => {
-  if (evt.target.checked) {
-    sliderElement.classList.remove('hidden');
-    updateSliderOptionsNew(0, 100, 1, 100);
-    imgPreview.className = 'effects__preview--marvin';
-  } else {
-    updateSliderOptionsDefault();
-  }
   sliderElement.noUiSlider.on('update', () => {
     sliderValue.value = sliderElement.noUiSlider.get();
     imgPreview.style.filter = `invert(${sliderValue.value}%)`;
   });
-});
+};
 
-// Добавляем и обрабатываем фобос эффект
-phobosEffect.addEventListener('change', (evt) => {
-  if (evt.target.checked) {
-    sliderElement.classList.remove('hidden');
-    updateSliderOptionsNew(0, 3, 0.1, 3);
-    imgPreview.className = 'effects__preview--phobos';
-  } else {
-    updateSliderOptionsDefault();
-  }
+const renderPhobosEffect = () => {
+  sliderContainer.classList.remove('hidden');
+  sliderElement.noUiSlider.updateOptions ({
+    range: {
+      min: 0,
+      max: 3,
+    },
+    step: 0.1,
+    start: 3,
+  });
   sliderElement.noUiSlider.on('update', () => {
     sliderValue.value = sliderElement.noUiSlider.get();
     imgPreview.style.filter = `blur(${sliderValue.value}px)`;
   });
-});
+};
 
-// Добавляем и обрабатываем зной эффект
-heatEffect.addEventListener('change', (evt) => {
-  if (evt.target.checked) {
-    sliderElement.classList.remove('hidden');
-    updateSliderOptionsNew(1, 3, 0.1, 3);
-    imgPreview.className = 'effects__preview--heat';
-  } else {
-    updateSliderOptionsDefault();
-  }
-  imgPreview.classList.add('effects__preview--heat');
+const renderHeatEffect = () => {
+  sliderContainer.classList.remove('hidden');
+  sliderElement.noUiSlider.updateOptions ({
+    range: {
+      min: 1,
+      max: 3,
+    },
+    step: 0.1,
+    start: 3,
+  });
   sliderElement.noUiSlider.on('update', () => {
     sliderValue.value = sliderElement.noUiSlider.get();
     imgPreview.style.filter = `brightness(${sliderValue.value})`;
   });
-});
+};
 
-// Сбрасываем все эффекты до начального
-originalEffect.addEventListener('change', (evt) => {
-  if (evt.target.checked) {
-    sliderElement.classList.add('hidden');
-    imgPreview.className = 'effects__preview--none';
-  }
+const renderOriginalEffect = () => {
+  sliderContainer.classList.add('hidden');
   imgPreview.style.filter = 'none';
-});
+};
+
+// функция отслеживания изменений в родительской форме
+const onFormChange = (evt) => {
+  if (evt.target.matches('input[id="effect-chrome"]')) {
+    renderChromEffect();
+    imgPreview.className = `effects__preview--${chromeEffect.value}`;
+  }
+  if (evt.target.matches('input[id="effect-sepia"]')) {
+    renderSepiaEffect();
+    imgPreview.className = `effects__preview--${sepiaEffect.value}`;
+  }
+  if (evt.target.matches('input[id="effect-marvin"]')) {
+    renderMarvinEffect();
+    imgPreview.className = `effects__preview--${marvinEffect.value}`;
+  }
+  if (evt.target.matches('input[id="effect-phobos"]')) {
+    renderPhobosEffect();
+    imgPreview.className = `effects__preview--${phobosEffect.value}`;
+  }
+  if (evt.target.matches('input[id="effect-heat"]')) {
+    renderHeatEffect();
+    imgPreview.className = `effects__preview--${heatEffect.value}`;
+  }
+  if (evt.target.matches('input[id="effect-none"]')) {
+    renderOriginalEffect();
+    imgPreview.className = `effects__preview--${originalEffect.value}`;
+  }
+};
+
+export {onFormChange};

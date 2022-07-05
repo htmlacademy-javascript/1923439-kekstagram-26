@@ -117,4 +117,4 @@ userPhotoForm.addEventListener('submit', (evt) => {
   }
 });
 
-export {hashtagsField, commentField};
+export {hashtagsField, commentField, userPhotoForm};
