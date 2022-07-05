@@ -57,7 +57,7 @@ const renderPhotoEffect = (min, max, step, start, effects, unit) => {
     sliderValue.value = sliderElement.noUiSlider.get();
     imgPreview.style.filter = `${effects}(${sliderValue.value}${unit})`;
   });
-}
+};
 
 // Скрытие слайдера на оригинальном фильтре при открытии страницы
 if (originalEffect.checked) {
