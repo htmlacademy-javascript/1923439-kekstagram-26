@@ -1,6 +1,6 @@
 import {imgPreview} from './scale_size_photos.js';
 
-const sliderContainer = document.querySelector('.img-upload__effect-level')
+const sliderContainer = document.querySelector('.img-upload__effect-level');
 const sliderElement = document.querySelector('.effect-level__slider');
 const sliderValue = document.querySelector('.effect-level__value');
 const chromeEffect = document.querySelector('#effect-chrome');
@@ -141,7 +141,7 @@ const onFormChange = (evt) => {
     renderPhobosEffect();
     imgPreview.className = `effects__preview--${phobosEffect.value}`;
   }
-    if (evt.target.matches('input[id="effect-heat"]')) {
+  if (evt.target.matches('input[id="effect-heat"]')) {
     renderHeatEffect();
     imgPreview.className = `effects__preview--${heatEffect.value}`;
   }
