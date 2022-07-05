@@ -32,121 +32,93 @@ noUiSlider.create(sliderElement, {
   },
 });
 
-// Скрытие слайдера на оригинальном фильтре
+// Создаём словарь
+const sliderOptionsList = {
+  min: [0, 1],
+  max: [1, 100, 3],
+  step: [0.1, 1],
+  start: [1, 100, 3],
+  effects: ['grayscale', 'sepia', 'invert', 'blur', 'brightness'],
+  unit: ['%', 'px', ''],
+};
+
+// Универсальная функция добавления и регулирования эффектов фотографий
+const renderPhotoEffect = (min, max, step, start, effects, unit) => {
+  sliderContainer.classList.remove('hidden');
+  sliderElement.noUiSlider.updateOptions ({
+    range: {
+      min: min,
+      max: max,
+    },
+    step: step,
+    start: start,
+  });
+  sliderElement.noUiSlider.on('update', () => {
+    sliderValue.value = sliderElement.noUiSlider.get();
+    imgPreview.style.filter = `${effects}(${sliderValue.value}${unit})`;
+  });
+}
+
+// Скрытие слайдера на оригинальном фильтре при открытии страницы
 if (originalEffect.checked) {
   sliderContainer.classList.add('hidden');
 }
 
-// Функции эффектов фильтров фотографий
-const renderChromEffect = () => {
-  sliderContainer.classList.remove('hidden');
-  sliderElement.noUiSlider.updateOptions ({
-    range: {
-      min: 0,
-      max: 1,
-    },
-    step: 0.1,
-    start: 1,
-  });
-  sliderElement.noUiSlider.on('update', () => {
-    sliderValue.value = sliderElement.noUiSlider.get();
-    imgPreview.style.filter = `grayscale(${sliderValue.value})`;
-  });
-};
-
-const renderSepiaEffect = () => {
-  sliderContainer.classList.remove('hidden');
-  sliderElement.noUiSlider.updateOptions ({
-    range: {
-      min: 0,
-      max: 1,
-    },
-    step: 0.1,
-    start: 1,
-  });
-  sliderElement.noUiSlider.on('update', () => {
-    sliderValue.value = sliderElement.noUiSlider.get();
-    imgPreview.style.filter = `sepia(${sliderValue.value})`;
-  });
-};
-
-const renderMarvinEffect = () => {
-  sliderContainer.classList.remove('hidden');
-  sliderElement.noUiSlider.updateOptions ({
-    range: {
-      min: 0,
-      max: 100,
-    },
-    step: 1,
-    start: 100,
-  });
-  sliderElement.noUiSlider.on('update', () => {
-    sliderValue.value = sliderElement.noUiSlider.get();
-    imgPreview.style.filter = `invert(${sliderValue.value}%)`;
-  });
-};
-
-const renderPhobosEffect = () => {
-  sliderContainer.classList.remove('hidden');
-  sliderElement.noUiSlider.updateOptions ({
-    range: {
-      min: 0,
-      max: 3,
-    },
-    step: 0.1,
-    start: 3,
-  });
-  sliderElement.noUiSlider.on('update', () => {
-    sliderValue.value = sliderElement.noUiSlider.get();
-    imgPreview.style.filter = `blur(${sliderValue.value}px)`;
-  });
-};
-
-const renderHeatEffect = () => {
-  sliderContainer.classList.remove('hidden');
-  sliderElement.noUiSlider.updateOptions ({
-    range: {
-      min: 1,
-      max: 3,
-    },
-    step: 0.1,
-    start: 3,
-  });
-  sliderElement.noUiSlider.on('update', () => {
-    sliderValue.value = sliderElement.noUiSlider.get();
-    imgPreview.style.filter = `brightness(${sliderValue.value})`;
-  });
-};
-
-const renderOriginalEffect = () => {
-  sliderContainer.classList.add('hidden');
-  imgPreview.style.filter = 'none';
-};
-
 // функция отслеживания изменений в родительской форме
 const onFormChange = (evt) => {
   if (evt.target.matches('input[id="effect-chrome"]')) {
-    renderChromEffect();
+    renderPhotoEffect(
+      sliderOptionsList.min[0],
+      sliderOptionsList.max[0],
+      sliderOptionsList.step[0],
+      sliderOptionsList.start[0],
+      sliderOptionsList.effects[0],
+      sliderOptionsList.unit[2]);
     imgPreview.className = `effects__preview--${chromeEffect.value}`;
   }
   if (evt.target.matches('input[id="effect-sepia"]')) {
-    renderSepiaEffect();
+    renderPhotoEffect(
+      sliderOptionsList.min[0],
+      sliderOptionsList.max[0],
+      sliderOptionsList.step[0],
+      sliderOptionsList.start[0],
+      sliderOptionsList.effects[1],
+      sliderOptionsList.unit[2]);
     imgPreview.className = `effects__preview--${sepiaEffect.value}`;
   }
   if (evt.target.matches('input[id="effect-marvin"]')) {
-    renderMarvinEffect();
+    renderPhotoEffect(
+      sliderOptionsList.min[0],
+      sliderOptionsList.max[1],
+      sliderOptionsList.step[1],
+      sliderOptionsList.start[1],
+      sliderOptionsList.effects[2],
+      sliderOptionsList.unit[0]);
     imgPreview.className = `effects__preview--${marvinEffect.value}`;
   }
   if (evt.target.matches('input[id="effect-phobos"]')) {
-    renderPhobosEffect();
+    renderPhotoEffect(
+      sliderOptionsList.min[0],
+      sliderOptionsList.max[2],
+      sliderOptionsList.step[0],
+      sliderOptionsList.start[2],
+      sliderOptionsList.effects[3],
+      sliderOptionsList.unit[1]);
     imgPreview.className = `effects__preview--${phobosEffect.value}`;
   }
   if (evt.target.matches('input[id="effect-heat"]')) {
-    renderHeatEffect();
+    renderPhotoEffect(
+      sliderOptionsList.min[1],
+      sliderOptionsList.max[2],
+      sliderOptionsList.step[0],
+      sliderOptionsList.start[2],
+      sliderOptionsList.effects[4],
+      sliderOptionsList.unit[2]);
     imgPreview.className = `effects__preview--${heatEffect.value}`;
   }
   if (evt.target.matches('input[id="effect-none"]')) {
-    renderOriginalEffect();
+    sliderContainer.classList.add('hidden');
+    imgPreview.style.filter = 'none';
     imgPreview.className = `effects__preview--${originalEffect.value}`;
   }
 };
