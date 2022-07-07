@@ -1,5 +1,7 @@
 import {isEscapeDown, stopListenerOnFocus} from './util.js';
-import {hashtagsField, commentField} from './form_validation.js';
+import {hashtagsField, commentField, userPhotoForm} from './form_validation.js';
+import {scaleBigger, scaleSmaller, biggerPhoto, smallerPhoto} from './scale_size_photos.js';
+import {onFormChange} from './effects_slider.js';
 
 // Находим поле в котором будет путь до локальной фотографии пользователя
 const uploadFileInput = document.querySelector('#upload-file');
@@ -33,6 +35,9 @@ function openEditPhotosPopup () {
   stopListenerOnFocus(hashtagsField, commentField);
   formPhotoEdit.classList.remove('hidden');
   document.querySelector('body').classList.add('modal-open');
+  userPhotoForm.addEventListener('change', onFormChange);
+  scaleBigger.addEventListener('click', biggerPhoto);
+  scaleSmaller.addEventListener('click', smallerPhoto);
   editPopupCLoseButton.addEventListener('click', onEditPopupClick);
   document.addEventListener('keydown', onEditPopupEscDown);
 }
@@ -42,6 +47,9 @@ function closeEditPhotosPopup () {
   formPhotoEdit.classList.add('hidden');
   document.querySelector('body').classList.remove('modal-open');
   uploadFileInput.value = '';
+  userPhotoForm.removeEventListener('change', onFormChange);
+  scaleBigger.removeEventListener('click', biggerPhoto);
+  scaleSmaller.removeEventListener('click', smallerPhoto);
   editPopupCLoseButton.removeEventListener('click', onEditPopupClick);
   document.removeEventListener('keydown', onEditPopupEscDown);
 }
