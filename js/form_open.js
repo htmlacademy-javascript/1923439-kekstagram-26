@@ -53,3 +53,5 @@ function closeEditPhotosPopup () {
   editPopupCLoseButton.removeEventListener('click', onEditPopupClick);
   document.removeEventListener('keydown', onEditPopupEscDown);
 }
+
+export {closeEditPhotosPopup, openEditPhotosPopup};
