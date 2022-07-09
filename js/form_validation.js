@@ -1,6 +1,7 @@
 import { sendData } from './server.js';
 import { MAX_LENGTH_COMMENT } from './util.js';
-import {closeEditPhotosPopup, openEditPhotosPopup} from './form_open.js';
+import { closeEditPhotosPopup } from './form_open.js';
+import './effects_slider.js';
 
 // Максимальное количество хэштегов
 const MAX_HASHTAGS_COUNT = 5;
@@ -31,7 +32,6 @@ const sucssesFormTemplate = document.querySelector('#success').content.querySele
 
 // Находим шаблон неудачной отправки формы
 const failFormTemplate = document.querySelector('#error').content.querySelector('.error');
-
 
 // Создаём Pristine и настройки сообщений об ошибках
 const pristine = new Pristine(userPhotoForm, {
@@ -123,28 +123,27 @@ pristine.addValidator(commentField,
   `Не более ${ MAX_LENGTH_COMMENT } символов`);
 
 // Функция блокирующая кнопку отправки
-const blockSubmitButton = () => {
-  submitButton.disabled = true;
-  submitButton.textContent = 'Публикуем...';
+const blockSubmitButton = (boolean, text) => {
+  submitButton.disabled = boolean;
+  submitButton.textContent = text;
 };
-
-// Функция снимающая блокировку с кнопки отправки
-const unblockSubmitButton = () => {
-  submitButton.disabled = false;
-  submitButton.textContent = 'Опубликовать';
-};
-
 
 //Функция создания окна успещной отправки формы
 const sucssesFormSubmit = () => {
   const sucssecFormElement = sucssesFormTemplate.cloneNode(true);
-  const uploadField = document.querySelector('.img-upload__control');
+  document.body.appendChild(sucssecFormElement);
+  const sucssesButton = sucssecFormElement.querySelector('.success__button');
+  const sucssesSection = document.querySelector('.success');
+  const sucssesBackground  = document.querySelector('.success__inner');
   const removeSucssesWindow = () => {
     sucssecFormElement.remove();
-    uploadField.classList.add('hidden');
+    document.removeEventListener('keydown', removeSucssesWindow);
   };
-  document.body.appendChild(sucssecFormElement);
-  sucssecFormElement.addEventListener('click', removeSucssesWindow);
+  sucssesBackground.addEventListener('click', (evt) => {
+    evt.stopImmediatePropagation();
+  });
+  sucssesSection.addEventListener('click', removeSucssesWindow);
+  sucssesButton.addEventListener('click', removeSucssesWindow);
   document.addEventListener('keydown', removeSucssesWindow);
 };
 
@@ -152,11 +151,18 @@ const sucssesFormSubmit = () => {
 const failFormSubmit = () => {
   const failFormElement = failFormTemplate.cloneNode(true);
   document.body.appendChild(failFormElement);
+  const failButton = failFormElement.querySelector('.error__button');
+  const failbackground = document.querySelector('.error');
+  const errorBackground  = document.querySelector('.error__inner');
   const removeFailWindow = () => {
     failFormElement.remove();
-    openEditPhotosPopup();
+    document.removeEventListener('keydown', removeFailWindow);
   };
-  failFormElement.addEventListener('click', removeFailWindow);
+  errorBackground.addEventListener('click', (evt) => {
+    evt.stopImmediatePropagation();
+  });
+  failbackground.addEventListener('click', removeFailWindow);
+  failButton.addEventListener('click', removeFailWindow);
   document.addEventListener('keydown', removeFailWindow);
 };
 
@@ -166,18 +172,16 @@ const setUserFormSubmit = (onSucsses) => {
   userPhotoForm.addEventListener('submit', (evt) => {
     evt.preventDefault();
     if (pristine.validate()) {
-      blockSubmitButton();
+      blockSubmitButton(true, 'Публикуем...');
       sendData(
         () => {
           onSucsses();
-          unblockSubmitButton();
-          sucssesFormSubmit();
           closeEditPhotosPopup();
+          sucssesFormSubmit();
         },
         () => {
-          closeEditPhotosPopup();
-          unblockSubmitButton();
           failFormSubmit();
+          closeEditPhotosPopup();
         },
         new FormData(evt.target),
       );
@@ -185,4 +189,4 @@ const setUserFormSubmit = (onSucsses) => {
   });
 };
 
-export {hashtagsField, commentField, userPhotoForm, setUserFormSubmit, blockSubmitButton, unblockSubmitButton};
+export {hashtagsField, commentField, userPhotoForm, setUserFormSubmit, blockSubmitButton};

@@ -10,7 +10,7 @@ const getData = (onSucsses, fail) => {
 };
 
 const sendData = (onSucsses, fail, body) => {
-  fetch('https://26.javascript.pages.academy/kekstagram',
+  fetch('https://26.javascript.pages.academ/kekstagram',
     {
       method: 'POST',
       body,
@@ -20,7 +20,7 @@ const sendData = (onSucsses, fail, body) => {
       if (response.ok) {
         onSucsses();
       } else {
-        fail('Не удалось отправить форму! Попробуйте обновить страницу!');
+        fail();
       }
     })
     .catch(() => {
