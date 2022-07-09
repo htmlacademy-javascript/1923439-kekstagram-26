@@ -2,6 +2,7 @@ import {isEscapeDown, stopListenerOnFocus} from './util.js';
 import {hashtagsField, commentField, userPhotoForm} from './form_validation.js';
 import {scaleBigger, scaleSmaller, biggerPhoto, smallerPhoto} from './scale_size_photos.js';
 import {onFormChange} from './effects_slider.js';
+import {blockSubmitButton} from './form_validation.js';
 
 // Находим поле в котором будет путь до локальной фотографии пользователя
 const uploadFileInput = document.querySelector('#upload-file');
@@ -34,13 +35,15 @@ const onEditPopupClick = () => {
 function openEditPhotosPopup () {
   stopListenerOnFocus(hashtagsField, commentField);
   formPhotoEdit.classList.remove('hidden');
-  document.querySelector('body').classList.add('modal-open');
   userPhotoForm.addEventListener('change', onFormChange);
+  blockSubmitButton(false, 'Опубликовать');
+  document.querySelector('body').classList.add('modal-open');
   scaleBigger.addEventListener('click', biggerPhoto);
   scaleSmaller.addEventListener('click', smallerPhoto);
   editPopupCLoseButton.addEventListener('click', onEditPopupClick);
   document.addEventListener('keydown', onEditPopupEscDown);
 }
+
 
 // функция закрытия попапа редактирования фотографии
 function closeEditPhotosPopup () {
@@ -54,4 +57,4 @@ function closeEditPhotosPopup () {
   document.removeEventListener('keydown', onEditPopupEscDown);
 }
 
-export {closeEditPhotosPopup, openEditPhotosPopup};
+export {closeEditPhotosPopup, openEditPhotosPopup, userPhotoForm};

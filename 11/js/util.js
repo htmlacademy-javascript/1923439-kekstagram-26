@@ -48,7 +48,7 @@ const createElement = (tagName, className) => {
 // Создаём функцию проверки нажатия esc на клавиатуре
 const isEscapeDown = (evt) => evt.key === 'Escape';
 
-// Функция остановки обработчика на поле в фокусе
+// Функция остановки обработчика на двух полях в фокусе
 const stopListenerOnFocus = (firstObject, secondObject) => {
   firstObject.addEventListener('keydown', (evt) => {
     evt.stopImmediatePropagation();
