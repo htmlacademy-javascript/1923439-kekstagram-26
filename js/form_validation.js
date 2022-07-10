@@ -1,5 +1,5 @@
 import { sendData } from './server.js';
-import { MAX_LENGTH_COMMENT } from './util.js';
+import { MAX_LENGTH_COMMENT, stopListenerOnFocus } from './util.js';
 import {closeEditPhotosPopup} from './form_open.js';
 import './effects_slider.js';
 
@@ -141,9 +141,7 @@ const successFormSubmit = () => {
     successFormElement.remove();
     document.removeEventListener('keydown', removeSuccessWindow);
   };
-  successBackground.addEventListener('click', (evt) => {
-    evt.stopImmediatePropagation();
-  });
+  stopListenerOnFocus(successBackground, 'click');
   successSection.addEventListener('click', removeSuccessWindow);
   successButton.addEventListener('click', removeSuccessWindow);
   document.addEventListener('keydown', removeSuccessWindow);
@@ -161,9 +159,7 @@ const failFormSubmit = () => {
     failFormElement.remove();
     document.removeEventListener('keydown', removeFailWindow);
   };
-  errorBackground.addEventListener('click', (evt) => {
-    evt.stopImmediatePropagation();
-  });
+  stopListenerOnFocus(errorBackground, 'click');
   failbackground.addEventListener('click', removeFailWindow);
   failButton.addEventListener('click', removeFailWindow);
   document.addEventListener('keydown', removeFailWindow);
