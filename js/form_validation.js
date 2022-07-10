@@ -1,4 +1,7 @@
-import { MAX_LENGTH_COMMENT } from './util.js';
+import { sendData } from './server.js';
+import { MAX_LENGTH_COMMENT, stopListenerOnFocus } from './util.js';
+import {closeEditPhotosPopup} from './form_open.js';
+import './effects_slider.js';
 
 // Максимальное количество хэштегов
 const MAX_HASHTAGS_COUNT = 5;
@@ -21,6 +24,14 @@ const commentField = userPhotoForm.querySelector('.text__description');
 // Регулярка для проверки Символов
 const regHashtagSymbol = /^#[A-Za-zА-Яа-яЁё0-9]{0,100}(\s#[A-Za-zА-Яа-яЁё0-9]{0,100}){0,20}$/i;
 
+// Находим кнопку отправки формы
+const submitButton = document.querySelector('.img-upload__submit');
+
+// Находим шаблон удачной отправки формы
+const successFormTemplate = document.querySelector('#success').content.querySelector('.success');
+
+// Находим шаблон неудачной отправки формы
+const failFormTemplate = document.querySelector('#error').content.querySelector('.error');
 
 // Создаём Pristine и настройки сообщений об ошибках
 const pristine = new Pristine(userPhotoForm, {
@@ -111,10 +122,67 @@ pristine.addValidator(commentField,
   checkCommentLength,
   `Не более ${ MAX_LENGTH_COMMENT } символов`);
 
-userPhotoForm.addEventListener('submit', (evt) => {
-  if (pristine.validate() === false) {
-    evt.preventDefault();
-  }
-});
+// Функция блокирующая кнопку отправки
+const blockSubmitButton = (boolean, text) => {
+  submitButton.disabled = boolean;
+  submitButton.textContent = text;
+};
 
-export {hashtagsField, commentField, userPhotoForm};
+//Функция создания окна успещной отправки формы
+const successFormSubmit = () => {
+  closeEditPhotosPopup();
+  const successFormElement = successFormTemplate.cloneNode(true);
+  document.body.appendChild(successFormElement);
+  const successButton = successFormElement.querySelector('.success__button');
+  const successSection = document.querySelector('.success');
+  const successBackground  = document.querySelector('.success__inner');
+  const removeSuccessWindow = () => {
+    userPhotoForm.reset();
+    successFormElement.remove();
+    document.removeEventListener('keydown', removeSuccessWindow);
+  };
+  stopListenerOnFocus(successBackground, 'click');
+  successSection.addEventListener('click', removeSuccessWindow);
+  successButton.addEventListener('click', removeSuccessWindow);
+  document.addEventListener('keydown', removeSuccessWindow);
+};
+
+//Функция создания окна ошибки отправки формы
+const failFormSubmit = () => {
+  closeEditPhotosPopup();
+  const failFormElement = failFormTemplate.cloneNode(true);
+  document.body.appendChild(failFormElement);
+  const failButton = failFormElement.querySelector('.error__button');
+  const failbackground = document.querySelector('.error');
+  const errorBackground  = document.querySelector('.error__inner');
+  const removeFailWindow = () => {
+    failFormElement.remove();
+    document.removeEventListener('keydown', removeFailWindow);
+  };
+  stopListenerOnFocus(errorBackground, 'click');
+  failbackground.addEventListener('click', removeFailWindow);
+  failButton.addEventListener('click', removeFailWindow);
+  document.addEventListener('keydown', removeFailWindow);
+};
+
+
+// Отправка формы
+const setUserFormSubmit = (onSuccess, fail) => {
+  userPhotoForm.addEventListener('submit', (evt) => {
+    evt.preventDefault();
+    if (pristine.validate()) {
+      blockSubmitButton(true, 'Публикуем...');
+      sendData(
+        () => {
+          onSuccess();
+        },
+        () => {
+          fail();
+        },
+        new FormData(evt.target),
+      );
+    }
+  });
+};
+
+export {hashtagsField, commentField, userPhotoForm, setUserFormSubmit, blockSubmitButton, successFormSubmit, failFormSubmit};

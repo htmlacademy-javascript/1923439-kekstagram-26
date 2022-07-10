@@ -118,4 +118,4 @@ const onFormChange = () => {
   }
 };
 
-export {onFormChange};
+export {onFormChange, imgPreview};

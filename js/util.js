@@ -1,5 +1,6 @@
 const MAX_LENGTH_COMMENT = 140;
 const MAX_COUNT = 200;
+const ALERT_SHOW_TIME = 6000;
 
 // Генерация случайного числа
 const getPositiveRandomInt = (min, max) => {
@@ -47,15 +48,34 @@ const createElement = (tagName, className) => {
 // Создаём функцию проверки нажатия esc на клавиатуре
 const isEscapeDown = (evt) => evt.key === 'Escape';
 
-// Функция остановки обработчика на поле в фокусе
-const stopListenerOnFocus = (firstObject, secondObject) => {
-  firstObject.addEventListener('keydown', (evt) => {
-    evt.stopImmediatePropagation();
-  });
-  secondObject.addEventListener('keydown', (evt) => {
+// Функция остановки обработчика на двух полях в фокусе
+const stopListenerOnFocus = (object, method) => {
+  object.addEventListener(method, (evt) => {
     evt.stopImmediatePropagation();
   });
 };
 
+// Функция для создания текста ошибки отправки данных на сервер
+const renderAlertError = (message) => {
+  const alertContainer = createElement('div');
+  alertContainer.style.position = 'absolute';
+  alertContainer.style.zIndex = '100';
+  alertContainer.style.top = '0';
+  alertContainer.style.left = '0';
+  alertContainer.style.right = '0';
+  alertContainer.style.padding = '20px 10px';
+  alertContainer.style.fontSize = '20px';
+  alertContainer.style.fontWeight = 'bold';
+  alertContainer.style.textAlign = 'center';
+  alertContainer.style.backgroundColor = 'grey';
+  alertContainer.textContent = message;
 
-export {getRandomArrayElement, getPositiveRandomInt, checksLength, MAX_COUNT, MAX_LENGTH_COMMENT, shuffleArray, getOrderUnicArray, createElement, isEscapeDown, stopListenerOnFocus};
+  document.body.append(alertContainer);
+
+  setTimeout(() => {
+    alertContainer.remove();
+  }, ALERT_SHOW_TIME);
+};
+
+
+export {getRandomArrayElement, getPositiveRandomInt, checksLength, MAX_COUNT, MAX_LENGTH_COMMENT, shuffleArray, getOrderUnicArray, createElement, isEscapeDown, stopListenerOnFocus, renderAlertError};
