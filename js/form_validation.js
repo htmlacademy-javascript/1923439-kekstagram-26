@@ -1,6 +1,6 @@
 import { sendData } from './server.js';
 import { MAX_LENGTH_COMMENT } from './util.js';
-import { closeEditPhotosPopup } from './form_open.js';
+import {closeEditPhotosPopup} from './form_open.js';
 import './effects_slider.js';
 
 // Максимальное количество хэштегов
@@ -168,7 +168,7 @@ const failFormSubmit = () => {
 
 
 // Отправка формы
-const setUserFormSubmit = (onSucsses) => {
+const setUserFormSubmit = (onSucsses, fail) => {
   userPhotoForm.addEventListener('submit', (evt) => {
     evt.preventDefault();
     if (pristine.validate()) {
@@ -176,17 +176,15 @@ const setUserFormSubmit = (onSucsses) => {
       sendData(
         () => {
           onSucsses();
-          closeEditPhotosPopup();
-          sucssesFormSubmit();
         },
         () => {
-          failFormSubmit();
-          closeEditPhotosPopup();
+          fail();
         },
         new FormData(evt.target),
+        closeEditPhotosPopup(),
       );
     }
   });
 };
 
-export {hashtagsField, commentField, userPhotoForm, setUserFormSubmit, blockSubmitButton};
+export {hashtagsField, commentField, userPhotoForm, setUserFormSubmit, blockSubmitButton, sucssesFormSubmit, failFormSubmit};
