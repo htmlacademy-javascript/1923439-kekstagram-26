@@ -4,7 +4,7 @@ import './users_photo_big.js';
 import './comments.js';
 import {renderAlertError} from './util.js';
 import './form_open.js';
-import {setUserFormSubmit, failFormSubmit, sucssesFormSubmit} from './form_validation.js';
+import {setUserFormSubmit, failFormSubmit, successFormSubmit} from './form_validation.js';
 import './effects_slider.js';
 import './scale_size_photos.js';
 import {getData} from './server.js';
@@ -16,4 +16,4 @@ getData((photos) => {
 renderAlertError
 );
 
-setUserFormSubmit(sucssesFormSubmit, failFormSubmit);
+setUserFormSubmit(successFormSubmit, failFormSubmit);

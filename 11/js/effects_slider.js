@@ -118,11 +118,4 @@ const onFormChange = () => {
   }
 };
 
-const onFormReset = (defaultValue) => {
-  imgPreview.className = '';
-  if (defaultValue === 'none') {
-    sliderContainer.classList.add('hidden');
-  }
-};
-
-export {onFormChange, imgPreview, onFormReset};
+export {onFormChange, imgPreview};

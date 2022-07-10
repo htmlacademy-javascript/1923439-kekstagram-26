@@ -28,7 +28,7 @@ const regHashtagSymbol = /^#[A-Za-zА-Яа-яЁё0-9]{0,100}(\s#[A-Za-zА-Яа-�
 const submitButton = document.querySelector('.img-upload__submit');
 
 // Находим шаблон удачной отправки формы
-const sucssesFormTemplate = document.querySelector('#success').content.querySelector('.success');
+const successFormTemplate = document.querySelector('#success').content.querySelector('.success');
 
 // Находим шаблон неудачной отправки формы
 const failFormTemplate = document.querySelector('#error').content.querySelector('.error');
@@ -129,26 +129,29 @@ const blockSubmitButton = (boolean, text) => {
 };
 
 //Функция создания окна успещной отправки формы
-const sucssesFormSubmit = () => {
-  const sucssecFormElement = sucssesFormTemplate.cloneNode(true);
-  document.body.appendChild(sucssecFormElement);
-  const sucssesButton = sucssecFormElement.querySelector('.success__button');
-  const sucssesSection = document.querySelector('.success');
-  const sucssesBackground  = document.querySelector('.success__inner');
-  const removeSucssesWindow = () => {
-    sucssecFormElement.remove();
-    document.removeEventListener('keydown', removeSucssesWindow);
+const successFormSubmit = () => {
+  closeEditPhotosPopup();
+  const successFormElement = successFormTemplate.cloneNode(true);
+  document.body.appendChild(successFormElement);
+  const successButton = successFormElement.querySelector('.success__button');
+  const successSection = document.querySelector('.success');
+  const successBackground  = document.querySelector('.success__inner');
+  const removeSuccessWindow = () => {
+    userPhotoForm.reset();
+    successFormElement.remove();
+    document.removeEventListener('keydown', removeSuccessWindow);
   };
-  sucssesBackground.addEventListener('click', (evt) => {
+  successBackground.addEventListener('click', (evt) => {
     evt.stopImmediatePropagation();
   });
-  sucssesSection.addEventListener('click', removeSucssesWindow);
-  sucssesButton.addEventListener('click', removeSucssesWindow);
-  document.addEventListener('keydown', removeSucssesWindow);
+  successSection.addEventListener('click', removeSuccessWindow);
+  successButton.addEventListener('click', removeSuccessWindow);
+  document.addEventListener('keydown', removeSuccessWindow);
 };
 
 //Функция создания окна ошибки отправки формы
 const failFormSubmit = () => {
+  closeEditPhotosPopup();
   const failFormElement = failFormTemplate.cloneNode(true);
   document.body.appendChild(failFormElement);
   const failButton = failFormElement.querySelector('.error__button');
@@ -168,23 +171,22 @@ const failFormSubmit = () => {
 
 
 // Отправка формы
-const setUserFormSubmit = (onSucsses, fail) => {
+const setUserFormSubmit = (onSuccess, fail) => {
   userPhotoForm.addEventListener('submit', (evt) => {
     evt.preventDefault();
     if (pristine.validate()) {
       blockSubmitButton(true, 'Публикуем...');
       sendData(
         () => {
-          onSucsses();
+          onSuccess();
         },
         () => {
           fail();
         },
         new FormData(evt.target),
-        closeEditPhotosPopup(),
       );
     }
   });
 };
 
-export {hashtagsField, commentField, userPhotoForm, setUserFormSubmit, blockSubmitButton, sucssesFormSubmit, failFormSubmit};
+export {hashtagsField, commentField, userPhotoForm, setUserFormSubmit, blockSubmitButton, successFormSubmit, failFormSubmit};
