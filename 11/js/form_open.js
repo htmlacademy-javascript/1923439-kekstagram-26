@@ -33,7 +33,8 @@ const onEditPopupClick = () => {
 
 // функция открытия попапа редактирования фотографии
 function openEditPhotosPopup () {
-  stopListenerOnFocus(hashtagsField, commentField);
+  stopListenerOnFocus(hashtagsField, 'keydown');
+  stopListenerOnFocus(commentField, 'keydown');
   formPhotoEdit.classList.remove('hidden');
   userPhotoForm.addEventListener('change', onFormChange);
   blockSubmitButton(false, 'Опубликовать');

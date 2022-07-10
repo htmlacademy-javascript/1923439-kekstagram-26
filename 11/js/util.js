@@ -49,11 +49,8 @@ const createElement = (tagName, className) => {
 const isEscapeDown = (evt) => evt.key === 'Escape';
 
 // Функция остановки обработчика на двух полях в фокусе
-const stopListenerOnFocus = (firstObject, secondObject) => {
-  firstObject.addEventListener('keydown', (evt) => {
-    evt.stopImmediatePropagation();
-  });
-  secondObject.addEventListener('keydown', (evt) => {
+const stopListenerOnFocus = (object, method) => {
+  object.addEventListener(method, (evt) => {
     evt.stopImmediatePropagation();
   });
 };
