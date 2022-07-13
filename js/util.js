@@ -87,5 +87,14 @@ const deleteActiveClassFromButton = (collections) => {
   );
 };
 
+// Функция устранения дребезга
+const debounce = (callback, timeoutDelay) => {
+  let timeoutId;
+  return (...rest) => {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => callback.apply(this, rest), timeoutDelay);
+  };
+};
 
-export {getRandomArrayElement, getPositiveRandomInt, checksLength, MAX_COUNT, MAX_LENGTH_COMMENT, shuffleArray, getOrderUnicArray, createElement, isEscapeDown, stopListenerOnFocus, renderAlertError, deleteActiveClassFromButton};
+
+export {getRandomArrayElement, getPositiveRandomInt, checksLength, MAX_COUNT, MAX_LENGTH_COMMENT, shuffleArray, getOrderUnicArray, createElement, isEscapeDown, stopListenerOnFocus, renderAlertError, deleteActiveClassFromButton, debounce};
