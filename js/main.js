@@ -8,10 +8,15 @@ import {setUserFormSubmit, failFormSubmit, successFormSubmit} from './form_valid
 import './effects_slider.js';
 import './scale_size_photos.js';
 import {getData} from './server.js';
+import {showSortingFIlter, showRandomPhoto, showDefaultPhoto, showDiscussedPhoto} from './sorting_filter.js';
 
 // Отрисовываем миниатюры фотографий пользователей
 getData((photos) => {
   renderUsersMiniatures(photos);
+  showRandomPhoto(photos);
+  showDefaultPhoto(photos);
+  showDiscussedPhoto(photos);
+  showSortingFIlter();
 },
 renderAlertError
 );

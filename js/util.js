@@ -77,5 +77,15 @@ const renderAlertError = (message) => {
   }, ALERT_SHOW_TIME);
 };
 
+// Функция для отслеживания и удаления активного класса с кнопок
+const deleteActiveClassFromButton = (collections) => {
+  collections.forEach((element) => {
+    if (element.classList.contains('img-filters__button--active')) {
+      element.classList.remove('img-filters__button--active');
+    }
+  }
+  );
+};
 
-export {getRandomArrayElement, getPositiveRandomInt, checksLength, MAX_COUNT, MAX_LENGTH_COMMENT, shuffleArray, getOrderUnicArray, createElement, isEscapeDown, stopListenerOnFocus, renderAlertError};
+
+export {getRandomArrayElement, getPositiveRandomInt, checksLength, MAX_COUNT, MAX_LENGTH_COMMENT, shuffleArray, getOrderUnicArray, createElement, isEscapeDown, stopListenerOnFocus, renderAlertError, deleteActiveClassFromButton};
