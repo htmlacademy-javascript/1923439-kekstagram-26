@@ -9,6 +9,7 @@ import './effects_slider.js';
 import './scale_size_photos.js';
 import {getData} from './server.js';
 import {showSortingFilter, showRandomPhoto, showDefaultPhoto, showDiscussedPhoto} from './sorting_filter.js';
+import './upload_photo.js';
 
 const DEBOUNCE_TIMER = 500;
 const sortingForm = document.querySelector('.img-filters__form');
