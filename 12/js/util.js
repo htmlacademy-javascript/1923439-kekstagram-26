@@ -78,10 +78,10 @@ const renderAlertError = (message) => {
 };
 
 // Функция для отслеживания и удаления активного класса с кнопок
-const deleteActiveClassFromButton = (collections) => {
+const deleteActiveClassFromButton = (collections, activeClass) => {
   collections.forEach((element) => {
-    if (element.classList.contains('img-filters__button--active')) {
-      element.classList.remove('img-filters__button--active');
+    if (element.classList.contains(activeClass)) {
+      element.classList.remove(activeClass);
     }
   }
   );
