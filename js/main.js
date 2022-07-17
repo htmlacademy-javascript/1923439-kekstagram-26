@@ -2,7 +2,7 @@ import {renderUsersMiniatures} from './users-photo-miniatures.js';
 import './users-photo-big.js';
 import {renderAlertError} from './util.js';
 import './form-open.js';
-import {setUserFormSubmit, failFormSubmit, successFormSubmit} from './form-validation.js';
+import {setUserFormSubmit, renderFailFormSubmit, renderSuccessFormSubmit} from './form-validation.js';
 import './effects-slider.js';
 import './scale-size-photos.js';
 import {getData} from './server.js';
@@ -18,4 +18,4 @@ getData((photos) => {
 renderAlertError
 );
 
-setUserFormSubmit(successFormSubmit, failFormSubmit);
+setUserFormSubmit(renderSuccessFormSubmit, renderFailFormSubmit);

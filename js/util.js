@@ -1,7 +1,6 @@
 const MAX_LENGTH_COMMENT = 140;
 const ALERT_SHOW_TIME = 6000;
 
-
 // Функция для перемешивания массива
 const shuffleArray = (array) => {
   let j, temp;

@@ -66,6 +66,7 @@ const renderComment = (comment) => {
   commentsList.appendChild(commentsItem);
 };
 
+// Функция реализации пагинации комментариев
 const renderBigPhotosComments = (comments, page) => {
   const start = (page - 1) * MAX_COMMENT_ON_PAGE;
   let end = page * MAX_COMMENT_ON_PAGE;
