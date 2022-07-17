@@ -1,15 +1,13 @@
-import './data.js';
-import {renderUsersMiniatures} from './users_photo_miniatures.js';
-import './users_photo_big.js';
-import './comments.js';
+import {renderUsersMiniatures} from './users-photo-miniatures.js';
+import './users-photo-big.js';
 import {renderAlertError} from './util.js';
-import './form_open.js';
-import {setUserFormSubmit, failFormSubmit, successFormSubmit} from './form_validation.js';
-import './effects_slider.js';
-import './scale_size_photos.js';
+import './form-open.js';
+import {setUserFormSubmit, failFormSubmit, successFormSubmit} from './form-validation.js';
+import './effects-slider.js';
+import './scale-size-photos.js';
 import {getData} from './server.js';
-import {onSortingFilter} from './sorting_filter.js';
-import './upload_photo.js';
+import {onSortingFilter} from './sorting-filter.js';
+import './upload-photo.js';
 
 
 // Отрисовываем миниатюры фотографий пользователей

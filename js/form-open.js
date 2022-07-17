@@ -1,21 +1,16 @@
 import {isEscapeDown, stopListenerOnFocus} from './util.js';
-import {hashtagsField, commentField, userPhotoForm} from './form_validation.js';
-import {scaleBigger, scaleSmaller, biggerPhoto, smallerPhoto} from './scale_size_photos.js';
-import {onFormChange} from './effects_slider.js';
-import {blockSubmitButton} from './form_validation.js';
+import {hashtagsField, commentField, userPhotoForm} from './form-validation.js';
+import {scaleBigger, scaleSmaller, biggerPhoto, smallerPhoto} from './scale-size-photos.js';
+import {onFormChange} from './effects-slider.js';
+import {blockSubmitButton} from './form-validation.js';
+import {uploadField} from './upload-photo.js';
 
-// Находим поле в котором будет путь до локальной фотографии пользователя
-const uploadFileInput = document.querySelector('#upload-file');
 
 // Находим форму редактирвоания изображения
 const formPhotoEdit = document.querySelector('.img-upload__overlay');
 
 // Находим кнопку закоытия формы редактирования фотографии
 const editPopupCLoseButton = document.querySelector('#upload-cancel');
-
-
-// Добавляем обработчик показа формы редактирования изображения
-uploadFileInput.addEventListener('change', openEditPhotosPopup);
 
 
 // функция проверки и закрытия если нажат esc и удаления обработчика
@@ -50,7 +45,7 @@ function openEditPhotosPopup () {
 function closeEditPhotosPopup () {
   formPhotoEdit.classList.add('hidden');
   document.querySelector('body').classList.remove('modal-open');
-  uploadFileInput.value = '';
+  uploadField.value = '';
   userPhotoForm.removeEventListener('change', onFormChange);
   scaleBigger.removeEventListener('click', biggerPhoto);
   scaleSmaller.removeEventListener('click', smallerPhoto);

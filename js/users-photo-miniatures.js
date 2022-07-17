@@ -1,4 +1,5 @@
-import { openBigPicture } from './users_photo_big.js';
+import {openBigPicture} from './users-photo-big.js';
+
 const usersMiniaturesContainer = document.querySelector('.pictures');
 const usersMiniaturesTemplate = document.querySelector('#picture').content.querySelector('.picture');
 

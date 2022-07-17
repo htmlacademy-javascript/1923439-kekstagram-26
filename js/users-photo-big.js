@@ -1,4 +1,4 @@
-import { createElement, isEscapeDown } from './util.js';
+import {createElement, isEscapeDown} from './util.js';
 
 // Максимальное количество отображаемых комментариев за один раз
 const MAX_COMMENT_ON_PAGE = 5;

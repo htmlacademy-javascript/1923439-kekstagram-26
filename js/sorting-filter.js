@@ -1,6 +1,6 @@
 import {shuffleArray, debounce, deleteActiveClassFromButton} from './util.js';
-import './users_photo_miniatures.js';
-import { renderUsersMiniatures } from './users_photo_miniatures.js';
+import './users-photo-miniatures.js';
+import {renderUsersMiniatures} from './users-photo-miniatures.js';
 
 const MAX_RANDOM_PHOTOS_COUNT = 10;
 const DEBOUNCE_TIMER = 500;

@@ -1,35 +1,7 @@
-import {imgPreview} from './scale_size_photos.js';
+import {imgPreview} from './scale-size-photos.js';
 
-const sliderContainer = document.querySelector('.img-upload__effect-level');
-const sliderElement = document.querySelector('.effect-level__slider');
-const sliderValue = document.querySelector('.effect-level__value');
-
-
-// Создаём слайдер
-noUiSlider.create(sliderElement, {
-  range: {
-    min: 1,
-    max: 100,
-  },
-  step: 1,
-  start: 100,
-  connect: 'lower',
-  format: {
-    to: function (value) {
-      if (Number.isInteger(value)) {
-        return value.toFixed(0);
-      }
-      return value.toFixed(1);
-    },
-    from: function (value) {
-      return parseFloat(value);
-    },
-  },
-});
-
-
-// Создаём словарь
-const filters = {
+// Создаём словарь настроек фильтров
+const Filters = {
   chrome: {
     options: {
       range: {
@@ -98,6 +70,34 @@ const filters = {
   },
 };
 
+const sliderContainer = document.querySelector('.img-upload__effect-level');
+const sliderElement = document.querySelector('.effect-level__slider');
+const sliderValue = document.querySelector('.effect-level__value');
+
+
+// Создаём слайдер
+noUiSlider.create(sliderElement, {
+  range: {
+    min: 1,
+    max: 100,
+  },
+  step: 1,
+  start: 100,
+  connect: 'lower',
+  format: {
+    to: function (value) {
+      if (Number.isInteger(value)) {
+        return value.toFixed(0);
+      }
+      return value.toFixed(1);
+    },
+    from: function (value) {
+      return parseFloat(value);
+    },
+  },
+});
+
+
 // Универсальная функция добавления и регулирования эффектов фотографий
 const renderPhotoEffect = (object) => {
   sliderContainer.classList.remove('hidden');
@@ -112,7 +112,7 @@ const renderPhotoEffect = (object) => {
 const onFormChange = () => {
   const checkedFilter = document.querySelector('input[name="effect"]:checked').value;
   imgPreview.className = `effects__preview--${checkedFilter}`;
-  renderPhotoEffect(filters[checkedFilter]);
+  renderPhotoEffect(Filters[checkedFilter]);
   if (checkedFilter === 'none') {
     sliderContainer.classList.add('hidden');
   }
