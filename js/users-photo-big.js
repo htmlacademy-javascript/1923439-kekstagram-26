@@ -1,4 +1,4 @@
-import { createElement, isEscapeDown } from './util.js';
+import {createElement, isEscapeDown} from './util.js';
 
 // Максимальное количество отображаемых комментариев за один раз
 const MAX_COMMENT_ON_PAGE = 5;
@@ -66,6 +66,7 @@ const renderComment = (comment) => {
   commentsList.appendChild(commentsItem);
 };
 
+// Функция реализации пагинации комментариев
 const renderBigPhotosComments = (comments, page) => {
   const start = (page - 1) * MAX_COMMENT_ON_PAGE;
   let end = page * MAX_COMMENT_ON_PAGE;

@@ -1,7 +1,7 @@
-import { sendData } from './server.js';
-import { MAX_LENGTH_COMMENT, stopListenerOnFocus } from './util.js';
-import {closeEditPhotosPopup} from './form_open.js';
-import './effects_slider.js';
+import {sendData} from './server.js';
+import {MAX_LENGTH_COMMENT, stopListenerOnFocus} from './util.js';
+import {closeEditPhotosPopup} from './form-open.js';
+import './effects-slider.js';
 
 // Максимальное количество хэштегов
 const MAX_HASHTAGS_COUNT = 5;
@@ -46,8 +46,6 @@ const pristine = new Pristine(userPhotoForm, {
 
 // Функция проверки длинны комментария
 const checkCommentLength = (commentsValue) => commentsValue.length <= MAX_LENGTH_COMMENT;
-
-checkCommentLength(commentField);
 
 // Функция валидации символики
 const checkHashtagsSymbol = (hashtagsValue) => {
@@ -129,7 +127,7 @@ const blockSubmitButton = (boolean, text) => {
 };
 
 //Функция создания окна успещной отправки формы
-const successFormSubmit = () => {
+const renderSuccessFormSubmit = () => {
   closeEditPhotosPopup();
   const successFormElement = successFormTemplate.cloneNode(true);
   document.body.appendChild(successFormElement);
@@ -148,7 +146,7 @@ const successFormSubmit = () => {
 };
 
 //Функция создания окна ошибки отправки формы
-const failFormSubmit = () => {
+const renderFailFormSubmit = () => {
   closeEditPhotosPopup();
   const failFormElement = failFormTemplate.cloneNode(true);
   document.body.appendChild(failFormElement);
@@ -173,16 +171,12 @@ const setUserFormSubmit = (onSuccess, fail) => {
     if (pristine.validate()) {
       blockSubmitButton(true, 'Публикуем...');
       sendData(
-        () => {
-          onSuccess();
-        },
-        () => {
-          fail();
-        },
+        () => onSuccess(),
+        () => fail(),
         new FormData(evt.target),
       );
     }
   });
 };
 
-export {hashtagsField, commentField, userPhotoForm, setUserFormSubmit, blockSubmitButton, successFormSubmit, failFormSubmit};
+export {hashtagsField, commentField, userPhotoForm, setUserFormSubmit, blockSubmitButton, renderSuccessFormSubmit, renderFailFormSubmit};
