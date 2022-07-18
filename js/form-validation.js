@@ -81,7 +81,7 @@ const checkLengthHashtags = (hashtagsValue) => {
 };
 
 // Функция валидации наличия #
-const checkfirstSymbolHashtags = (hashtagsValue) => {
+const checkFirstSymbolHashtags = (hashtagsValue) => {
   if (hashtagsValue === '') {
     return true;
   }
@@ -97,7 +97,7 @@ const checkfirstSymbolHashtags = (hashtagsValue) => {
 
 // Валидаторы
 pristine.addValidator(hashtagsField,
-  checkfirstSymbolHashtags,
+  checkFirstSymbolHashtags,
   'Хэштег должен начинаться с #');
 
 pristine.addValidator(hashtagsField,

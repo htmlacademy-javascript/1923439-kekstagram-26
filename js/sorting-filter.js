@@ -10,7 +10,6 @@ const FILTERS_TYPE = {
   discussed: 'filter-discussed',
 };
 const sortingFilter = document.querySelector('.img-filters');
-const randomButton = sortingFilter.querySelector('#filter-random');
 const sortingButtons = sortingFilter.querySelectorAll('.img-filters__button');
 const sortingForm = document.querySelector('.img-filters__form');
 
@@ -24,8 +23,8 @@ const compareComments = (commentA, commentB) => commentB.comments.length - comme
 
 // Функция показа рандомных фоток с сервера
 const showRandomPhoto = (photos) => {
-  const shuffeledArray = shuffleArray(photos.slice());
-  renderUsersMiniatures(shuffeledArray.slice(0, MAX_RANDOM_PHOTOS_COUNT));
+  const shuffledArray = shuffleArray(photos.slice());
+  renderUsersMiniatures(shuffledArray.slice(0, MAX_RANDOM_PHOTOS_COUNT));
 };
 
 // Функция показа всех фоток с сервера по умолчанию
@@ -62,4 +61,4 @@ const onSortingFilter = (photos) => {
   showSortingFilter();
 };
 
-export {showSortingFilter, showRandomPhoto, showDefaultPhoto, showDiscussedPhoto, randomButton, sortingButtons, showFiltersDebounced, onSortingFilter};
+export {showSortingFilter, showRandomPhoto, showDefaultPhoto, showDiscussedPhoto, sortingButtons, showFiltersDebounced, onSortingFilter};
