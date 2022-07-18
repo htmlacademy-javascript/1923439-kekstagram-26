@@ -8,7 +8,7 @@ const scaleBigger = document.querySelector('.scale__control--bigger');
 const imgPreview = document.querySelector('.img-upload__preview img');
 
 
-const biggerPhoto = () => {
+const renderBiggerPhoto = () => {
   scaleInput.value = `${parseInt(scaleInput.value, 10) + MIN_SIZE_VALUE }%`;
   imgPreview.style.transform = `scale(0.${parseInt(scaleInput.value, 10)}`;
   if (parseInt(scaleInput.value, 10) >= MAX_SIZE_VALUE){
@@ -17,7 +17,7 @@ const biggerPhoto = () => {
   }
 };
 
-const smallerPhoto = () => {
+const renderSmallerPhoto = () => {
   scaleInput.value = `${parseInt(scaleInput.value, 10) - MIN_SIZE_VALUE }%`;
   imgPreview.style.transform = `scale(0.${parseInt(scaleInput.value, 10)}`;
   if (parseInt(scaleInput.value, 10) <= MIN_SIZE_VALUE) {
@@ -30,4 +30,4 @@ const smallerPhoto = () => {
   }
 };
 
-export {imgPreview, scaleBigger, scaleSmaller, biggerPhoto, smallerPhoto};
+export {imgPreview, scaleBigger, scaleSmaller, renderBiggerPhoto, renderSmallerPhoto};

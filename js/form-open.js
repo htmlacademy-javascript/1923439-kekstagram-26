@@ -1,6 +1,6 @@
 import {isEscapeDown, stopListenerOnFocus} from './util.js';
 import {hashtagsField, commentField, userPhotoForm} from './form-validation.js';
-import {scaleBigger, scaleSmaller, biggerPhoto, smallerPhoto} from './scale-size-photos.js';
+import {scaleBigger, scaleSmaller, renderBiggerPhoto, renderSmallerPhoto} from './scale-size-photos.js';
 import {onFormChange} from './effects-slider.js';
 import {blockSubmitButton} from './form-validation.js';
 import {uploadField} from './upload-photo.js';
@@ -34,8 +34,8 @@ function openEditPhotosPopup () {
   userPhotoForm.addEventListener('change', onFormChange);
   blockSubmitButton(false, 'Опубликовать');
   document.querySelector('body').classList.add('modal-open');
-  scaleBigger.addEventListener('click', biggerPhoto);
-  scaleSmaller.addEventListener('click', smallerPhoto);
+  scaleBigger.addEventListener('click', renderBiggerPhoto);
+  scaleSmaller.addEventListener('click', renderSmallerPhoto);
   editPopupCLoseButton.addEventListener('click', onEditPopupClick);
   document.addEventListener('keydown', onEditPopupEscDown);
 }
@@ -47,8 +47,8 @@ function closeEditPhotosPopup () {
   document.querySelector('body').classList.remove('modal-open');
   uploadField.value = '';
   userPhotoForm.removeEventListener('change', onFormChange);
-  scaleBigger.removeEventListener('click', biggerPhoto);
-  scaleSmaller.removeEventListener('click', smallerPhoto);
+  scaleBigger.removeEventListener('click', renderBiggerPhoto);
+  scaleSmaller.removeEventListener('click', renderSmallerPhoto);
   editPopupCLoseButton.removeEventListener('click', onEditPopupClick);
   document.removeEventListener('keydown', onEditPopupEscDown);
 }
